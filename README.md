@@ -1,16 +1,43 @@
 # workout_app
 
-A new Flutter project.
+A simple Flutter-based workout application designed for beginners.
+The app displays workouts and exercises with clear descriptions and visuals (images/GIFs/videos) to help users follow along easily.
 
-## Getting Started
+This project is mainly focused on learning Flutter app structure and building a scalable fitness app foundation.
 
-This project is a starting point for a Flutter application.
+🚀 How to Run the App
+Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+Make sure you have:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Flutter SDK installed
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Android Studio or VS Code
+
+An Android emulator or physical device
+
+Check setup:
+
+flutter doctor
+
+Install Dependencies
+
+From the project root:
+
+flutter pub get
+
+Run the App
+flutter run
+
+
+The app will launch on your connected device or emulator.
+
+📁 Project Overview
+
+Built using Flutter (Dart)
+
+Uses Material UI
+
+Exercise media is loaded from local assets or remote URLs
+
+Designed to be beginner-friendly and easy to extend
