@@ -1,0 +1,71 @@
+# Flutter/Dart/Pub related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Dart
+*.dart.js
+*.dart.js.deps
+*.dart.js.map
+*.dart.js.tar.gz
+*.dill
+*.snapshot
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Android
+android/.gradle/
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/local.properties
+android/key.properties
+**/*.keystore
+**/*.jks
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/App.framework
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/ephemeral/
+ios/Runner/GeneratedPluginRegistrant.*
+*.xcworkspace
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+# macOS
+macos/Pods/
+macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Windows
+windows/flutter/ephemeral/
+
+# Linux
+linux/flutter/ephemeral/
+
+# Web
+web/.dart_tool/
+web/build/
+
+# Firebase / secrets (optional but recommended)
+google-services.json
+GoogleService-Info.plist
+*.env
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
