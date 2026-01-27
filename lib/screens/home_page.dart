@@ -49,7 +49,6 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.all(20),
               child: SizedBox(
-                height: 55,
                 width: double.infinity,
                 child: SearchBar(
                   hintText: 'Search exercises',
@@ -64,7 +63,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            SizedBox(height: 25),
             ...List.generate((exerciseTiles.length / 2).ceil(), (rowIndex) {
               int firstIndex = rowIndex * 2;
               int secondIndex = firstIndex + 1;
@@ -74,11 +72,11 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    exerciseTile(exerciseTiles[firstIndex]),
+                    exerciseTile(context, exerciseTiles[firstIndex]),
                     if (secondIndex < exerciseTiles.length)
                       const SizedBox(width: 20),
                     if (secondIndex < exerciseTiles.length)
-                      exerciseTile(exerciseTiles[secondIndex]),
+                      exerciseTile(context, exerciseTiles[secondIndex]),
                   ],
                 ),
               );
@@ -157,10 +155,17 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget exerciseTile(Map<String, dynamic> data) {
+  Widget exerciseTile(BuildContext context, Map<String, dynamic> data) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Set tile size as fraction of screen
+    final tileHeight = screenHeight * 0.15; // adjust as needed
+    final tileWidth = (screenWidth - 88) / 2; // 16px padding + 20px spacing
+
     return SizedBox(
-      height: 140,
-      width: 180,
+      height: tileHeight,
+      width: tileWidth,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Stack(
