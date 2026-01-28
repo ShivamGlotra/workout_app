@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/screens/chest_page.dart';
+import 'package:workout_app/shared/widgets/drawer.dart';
 import 'package:workout_app/screens/home_page.dart';
+import 'constants/pageHeading.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,11 +41,24 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = <Widget>[
-    HomePage(),
-    HomePage(),
-    HomePage(),
-    HomePage(),
+  final List<Widget> _screens = [
+    HomePage(), // "Home"
+    HomePage(), // "Home"
+    HomePage(), // "Home"
+    HomePage(), // "Home"
+    ChestPage(), // "Chest"
+    // BackPage(), // "Back"
+    // ShouldersPage(), // "Shoulders"
+    // LegsPage(), // "Legs"
+    // ArmsPage(), // "Arms"
+    // CorePage(), // "Core"
+    // CardioPage(), // "Cardio"
+    // ProfilePage(), // "Profile"
+    // ExercisePage(), // "Exercise"
+    // WorkoutPage(), // "Workout"
+    // BMIPage(), // "BMI"
+    // CaloriePage(), // "Calorie"
+    // AIPage(), // "AI"
   ];
 
   void _onItemTapped(int index) {
@@ -54,7 +70,62 @@ class _MainNavigationState extends State<MainNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: _selectedIndex, children: _screens),
+      drawer: CustomDrawer(),
+      appBar: AppBar(
+        title: getPageHeadingText(pageHeadings[_selectedIndex]),
+        centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Divider(height: 1, thickness: 0, color: Colors.black),
+        ),
+      ),
+      body: Column(
+        children: [
+          // 1️⃣ Search bar
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * .85,
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Search exercises",
+                  prefixIcon: const Icon(Icons.search),
+                  filled: true,
+                  fillColor: Colors.white,
+
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(
+                      color: Colors.black38,
+                      width: 1,
+                    ),
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(
+                      color: Colors.black, // <-- border color when active
+                      width: 1,
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                onChanged: (query) {
+                  // TODO: implement search filtering for the current page
+                  print("Searching: $query");
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: IndexedStack(index: _selectedIndex, children: _screens),
+          ),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         height: 70,
         selectedIndex: _selectedIndex,
@@ -85,6 +156,13 @@ class _MainNavigationState extends State<MainNavigation> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget getPageHeadingText(PageHeading pageHeading) {
+    return Text(
+      pageHeading.value,
+      style: const TextStyle(fontWeight: FontWeight.bold),
     );
   }
 }
