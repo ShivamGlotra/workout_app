@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/constants/app_routes.dart';
+import 'package:workout_app/routing/page_routes.dart';
+import 'package:workout_app/screens/chest_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,6 +11,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? _activePageKey;
+
   final List<Map<String, dynamic>> exerciseTiles = [
     {"title": "CHEST", "image": "assets/images/chest.png"},
     {"title": "BACK", "image": "assets/images/back.png"},
@@ -21,32 +26,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ...List.generate((exerciseTiles.length / 2).ceil(), (rowIndex) {
-              int firstIndex = rowIndex * 2;
-              int secondIndex = firstIndex + 1;
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    exerciseTile(context, exerciseTiles[firstIndex]),
-                    if (secondIndex < exerciseTiles.length)
-                      const SizedBox(width: 20),
-                    if (secondIndex < exerciseTiles.length)
-                      exerciseTile(context, exerciseTiles[secondIndex]),
-                  ],
-                ),
-              );
-            }),
-          ],
-        ),
-      ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: _activePageKey != null && pageBuilders.containsKey(_activePageKey)
+          ? pageBuilders[_activePageKey]!
+          : buildExcerciseGrid(context),
     );
   }
 
@@ -55,8 +39,8 @@ class _HomePageState extends State<HomePage> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     // Set tile size as fraction of screen
-    final tileHeight = screenHeight * 0.15; // adjust as needed
-    final tileWidth = (screenWidth - 88) / 2; // 16px padding + 20px spacing
+    final tileHeight = screenHeight * 0.14; // adjust as needed
+    final tileWidth = (screenWidth - 82) / 2; // 16px padding + 20px spacing
 
     return SizedBox(
       height: tileHeight,
@@ -71,7 +55,9 @@ class _HomePageState extends State<HomePage> {
               color: Colors.black26, // semi-transparent overlay
               child: InkWell(
                 onTap: () {
-                  // handle button tap
+                  setState(() {
+                    _activePageKey = data['title'];
+                  });
                 },
                 child: Center(
                   child: Text(
@@ -89,6 +75,31 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildExcerciseGrid(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        ...List.generate((exerciseTiles.length / 2).ceil(), (rowIndex) {
+          int firstIndex = rowIndex * 2;
+          int secondIndex = firstIndex + 1;
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                exerciseTile(context, exerciseTiles[firstIndex]),
+                if (secondIndex < exerciseTiles.length)
+                  const SizedBox(width: 15),
+                if (secondIndex < exerciseTiles.length)
+                  exerciseTile(context, exerciseTiles[secondIndex]),
+              ],
+            ),
+          );
+        }),
+      ],
     );
   }
 }

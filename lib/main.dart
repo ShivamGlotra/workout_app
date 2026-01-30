@@ -46,7 +46,6 @@ class _MainNavigationState extends State<MainNavigation> {
     HomePage(), // "Home"
     HomePage(), // "Home"
     HomePage(), // "Home"
-    ChestPage(), // "Chest"
     // BackPage(), // "Back"
     // ShouldersPage(), // "Shoulders"
     // LegsPage(), // "Legs"
@@ -81,31 +80,30 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       body: Column(
         children: [
-          // 1️⃣ Search bar
+          SizedBox(height: 20),
+          // Search bar
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: SizedBox(
-              width: MediaQuery.of(context).size.width * .85,
+              width: MediaQuery.of(context).size.width * .84,
               child: TextField(
                 decoration: InputDecoration(
                   hintText: "Search exercises",
                   prefixIcon: const Icon(Icons.search),
                   filled: true,
                   fillColor: Colors.white,
-
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: const BorderSide(
-                      color: Colors.black38,
-                      width: 1,
+                      color: Colors.black26,
+                      width: 2,
                     ),
                   ),
-
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: const BorderSide(
-                      color: Colors.black, // <-- border color when active
-                      width: 1,
+                      color: Colors.black54, // <-- border color when active
+                      width: 2,
                     ),
                   ),
                   contentPadding: const EdgeInsets.symmetric(vertical: 0),
@@ -121,6 +119,7 @@ class _MainNavigationState extends State<MainNavigation> {
               ),
             ),
           ),
+          SizedBox(height: 10),
           Expanded(
             child: IndexedStack(index: _selectedIndex, children: _screens),
           ),
