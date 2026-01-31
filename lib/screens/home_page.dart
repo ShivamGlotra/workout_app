@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
     // final tileWidth = (screenWidth - 82) / 2; // 16px padding + 20px spacing
 
     return AspectRatio(
-      aspectRatio: 1.6,
+      aspectRatio: 1.3,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Stack(
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
           int firstIndex = rowIndex * 2;
           int secondIndex = firstIndex + 1;
           return Padding(
-            padding: const EdgeInsets.only(bottom: 20, left: 15, right: 15),
+            padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
