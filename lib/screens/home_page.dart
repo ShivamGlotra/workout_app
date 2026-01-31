@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/constants/app_routes.dart';
+import 'package:workout_app/routing/page_routes.dart';
+import 'package:workout_app/screens/chest_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final bool reset;
+  const HomePage({super.key, required this.reset});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Map<String, dynamic>> drawerButtons = [
-    {"title": "Home", "icon": Icons.home},
-    {"title": "Exercise Library", "icon": Icons.fitness_center},
-    {"title": "Workout Plans", "icon": Icons.event_note},
-    {"title": "BMI Calculator", "icon": Icons.calculate},
-    {"title": "Calorie Calculator", "icon": Icons.restaurant},
-    {"title": "AI Coach", "icon": Icons.smart_toy},
-    {"title": "Profile", "icon": Icons.person},
-  ];
+  String? _activePageKey;
 
   final List<Map<String, dynamic>> exerciseTiles = [
     {"title": "CHEST", "image": "assets/images/chest.png"},
@@ -29,136 +25,23 @@ class _HomePageState extends State<HomePage> {
     {"title": "30 Min WORKOUT", "image": "assets/images/triceps.png"},
   ];
 
-  int _selectedIndex = 0;
-  void _onItemTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-      Navigator.pop(context);
-    });
+  @override
+  void didUpdateWidget(covariant HomePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.reset && _activePageKey != null) {
+      setState(() {
+        _activePageKey = null;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Let's Workout"),
-        centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Divider(height: 1, thickness: 0, color: Colors.black),
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: SizedBox(
-                width: double.infinity,
-                child: SearchBar(
-                  hintText: 'Search exercises',
-                  leading: const Icon(Icons.search),
-                  elevation: MaterialStateProperty.all(1),
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            ...List.generate((exerciseTiles.length / 2).ceil(), (rowIndex) {
-              int firstIndex = rowIndex * 2;
-              int secondIndex = firstIndex + 1;
-
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    exerciseTile(context, exerciseTiles[firstIndex]),
-                    if (secondIndex < exerciseTiles.length)
-                      const SizedBox(width: 20),
-                    if (secondIndex < exerciseTiles.length)
-                      exerciseTile(context, exerciseTiles[secondIndex]),
-                  ],
-                ),
-              );
-            }),
-          ],
-        ),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            SizedBox(
-              height: 80,
-              child: Center(
-                child: Text(
-                  "Let's Workout",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            const Divider(
-              height: 1,
-              thickness: 2,
-              color: Colors.black45,
-              // indent: 10, // Empty space to the left of the line
-              // endIndent: 10, // Empty space to the right of the line
-            ),
-            const SizedBox(height: 10),
-            Column(
-              children: drawerButtons.asMap().entries.map((entry) {
-                var data = entry.value;
-                int index = entry.key;
-                return drawerButton(
-                  data['icon'],
-                  data['title'],
-                  _selectedIndex == index,
-                  () => _onItemTap(index),
-                );
-              }).toList(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget drawerButton(
-    IconData icon,
-    String title,
-    bool isSelected,
-    VoidCallback onTap,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-      child: Material(
-        color: isSelected ? Colors.black : Colors.transparent,
-        borderRadius: BorderRadius.circular(10),
-        child: InkWell(
-          child: ListTile(
-            leading: Icon(
-              icon,
-              color: isSelected ? Colors.white : Colors.black,
-            ),
-            title: Text(
-              title,
-              style: TextStyle(color: isSelected ? Colors.white : Colors.black),
-            ),
-            onTap: onTap,
-          ),
-        ),
-      ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: _activePageKey != null && pageBuilders.containsKey(_activePageKey)
+          ? pageBuilders[_activePageKey]!()
+          : buildExcerciseGrid(context),
     );
   }
 
@@ -167,8 +50,8 @@ class _HomePageState extends State<HomePage> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     // Set tile size as fraction of screen
-    final tileHeight = screenHeight * 0.15; // adjust as needed
-    final tileWidth = (screenWidth - 88) / 2; // 16px padding + 20px spacing
+    final tileHeight = screenHeight * 0.14; // adjust as needed
+    final tileWidth = (screenWidth - 82) / 2; // 16px padding + 20px spacing
 
     return SizedBox(
       height: tileHeight,
@@ -183,7 +66,9 @@ class _HomePageState extends State<HomePage> {
               color: Colors.black26, // semi-transparent overlay
               child: InkWell(
                 onTap: () {
-                  // handle button tap
+                  setState(() {
+                    _activePageKey = data['title'];
+                  });
                 },
                 child: Center(
                   child: Text(
@@ -201,6 +86,31 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildExcerciseGrid(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        ...List.generate((exerciseTiles.length / 2).ceil(), (rowIndex) {
+          int firstIndex = rowIndex * 2;
+          int secondIndex = firstIndex + 1;
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                exerciseTile(context, exerciseTiles[firstIndex]),
+                if (secondIndex < exerciseTiles.length)
+                  const SizedBox(width: 15),
+                if (secondIndex < exerciseTiles.length)
+                  exerciseTile(context, exerciseTiles[secondIndex]),
+              ],
+            ),
+          );
+        }),
+      ],
     );
   }
 }
