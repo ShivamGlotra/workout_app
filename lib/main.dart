@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workout_app/screens/chest_page.dart';
+import 'package:workout_app/screens/excerciseScreens/chest_page.dart';
 import 'package:workout_app/shared/widgets/drawer.dart';
 import 'package:workout_app/screens/home_page.dart';
 import 'constants/pageHeading.dart';
@@ -69,10 +69,10 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 20),
+          SizedBox(height: 10),
           // Search bar
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
             child: SizedBox(
               width: MediaQuery.of(context).size.width * .84,
               child: TextField(
@@ -107,7 +107,6 @@ class _MainNavigationState extends State<MainNavigation> {
               ),
             ),
           ),
-          SizedBox(height: 10),
           Expanded(
             child: IndexedStack(index: _selectedIndex, children: screens),
           ),
