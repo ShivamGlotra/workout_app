@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/constants/app_routes.dart';
 import 'package:workout_app/routing/page_routes.dart';
-import 'package:workout_app/screens/chest_page.dart';
+import 'package:workout_app/screens/excerciseScreens/chest_page.dart';
 
 class HomePage extends StatefulWidget {
   final bool reset;
@@ -46,16 +46,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget exerciseTile(BuildContext context, Map<String, dynamic> data) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
+    // final screenHeight = MediaQuery.of(context).size.height;
+    // final screenWidth = MediaQuery.of(context).size.width;
 
-    // Set tile size as fraction of screen
-    final tileHeight = screenHeight * 0.14; // adjust as needed
-    final tileWidth = (screenWidth - 82) / 2; // 16px padding + 20px spacing
+    // // Set tile size as fraction of screen
+    // final tileHeight = screenHeight * 0.14; // adjust as needed
+    // final tileWidth = (screenWidth - 82) / 2; // 16px padding + 20px spacing
 
-    return SizedBox(
-      height: tileHeight,
-      width: tileWidth,
+    return AspectRatio(
+      aspectRatio: 1.6,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Stack(
@@ -93,19 +92,24 @@ class _HomePageState extends State<HomePage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        SizedBox(height: 20),
         ...List.generate((exerciseTiles.length / 2).ceil(), (rowIndex) {
           int firstIndex = rowIndex * 2;
           int secondIndex = firstIndex + 1;
           return Padding(
-            padding: const EdgeInsets.only(bottom: 15),
+            padding: const EdgeInsets.only(bottom: 20, left: 15, right: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                exerciseTile(context, exerciseTiles[firstIndex]),
+                Expanded(
+                  child: exerciseTile(context, exerciseTiles[firstIndex]),
+                ),
                 if (secondIndex < exerciseTiles.length)
                   const SizedBox(width: 15),
                 if (secondIndex < exerciseTiles.length)
-                  exerciseTile(context, exerciseTiles[secondIndex]),
+                  Expanded(
+                    child: exerciseTile(context, exerciseTiles[secondIndex]),
+                  ),
               ],
             ),
           );
