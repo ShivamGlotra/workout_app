@@ -10,14 +10,13 @@ import 'package:workout_app/screens/shoulders_page.dart';
 import '../screens/chest_page.dart';
 import 'package:workout_app/screens/back_page.dart';
 
-final Map<String, Widget> pageBuilders = {
-  AppRoutes.home: const HomePage(),
-  AppRoutes.chest: const ChestPage(),
-  AppRoutes.back: const BackPage(),
-  AppRoutes.shoulders: const ShouldersPage(),
-  AppRoutes.legs: const LegPage(),
-  AppRoutes.forearms: const ArmsPage(),
-  AppRoutes.core: const CorePage(),
-  AppRoutes.cardio: const CardioPage(),
-  AppRoutes.quickGym: const QuickWorkoutPage(),
+final Map<String, Widget Function()> pageBuilders = {
+  AppRoutes.chest: () => ChestPage(),
+  AppRoutes.back: () => BackPage(),
+  AppRoutes.shoulders: () => ShouldersPage(),
+  AppRoutes.legs: () => LegPage(),
+  AppRoutes.forearms: () => ArmsPage(),
+  AppRoutes.core: () => CorePage(),
+  AppRoutes.cardio: () => CardioPage(),
+  AppRoutes.quickGym: () => QuickWorkoutPage(),
 };

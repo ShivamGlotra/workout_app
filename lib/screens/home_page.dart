@@ -4,7 +4,8 @@ import 'package:workout_app/routing/page_routes.dart';
 import 'package:workout_app/screens/chest_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final bool reset;
+  const HomePage({super.key, required this.reset});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -25,11 +26,21 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void didUpdateWidget(covariant HomePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.reset && _activePageKey != null) {
+      setState(() {
+        _activePageKey = null;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: _activePageKey != null && pageBuilders.containsKey(_activePageKey)
-          ? pageBuilders[_activePageKey]!
+          ? pageBuilders[_activePageKey]!()
           : buildExcerciseGrid(context),
     );
   }

@@ -41,25 +41,6 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = [
-    HomePage(), // "Home"
-    HomePage(), // "Home"
-    HomePage(), // "Home"
-    HomePage(), // "Home"
-    // BackPage(), // "Back"
-    // ShouldersPage(), // "Shoulders"
-    // LegsPage(), // "Legs"
-    // ArmsPage(), // "Arms"
-    // CorePage(), // "Core"
-    // CardioPage(), // "Cardio"
-    // ProfilePage(), // "Profile"
-    // ExercisePage(), // "Exercise"
-    // WorkoutPage(), // "Workout"
-    // BMIPage(), // "BMI"
-    // CaloriePage(), // "Calorie"
-    // AIPage(), // "AI"
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -68,6 +49,14 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    final bool resetHome = _selectedIndex == 0;
+
+    final List<Widget> screens = [
+      HomePage(reset: resetHome), // "Home"
+      HomePage(reset: resetHome),
+      HomePage(reset: resetHome),
+      HomePage(reset: resetHome),
+    ];
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
@@ -113,7 +102,6 @@ class _MainNavigationState extends State<MainNavigation> {
                   ),
                 ),
                 onChanged: (query) {
-                  // TODO: implement search filtering for the current page
                   print("Searching: $query");
                 },
               ),
@@ -121,15 +109,14 @@ class _MainNavigationState extends State<MainNavigation> {
           ),
           SizedBox(height: 10),
           Expanded(
-            child: IndexedStack(index: _selectedIndex, children: _screens),
+            child: IndexedStack(index: _selectedIndex, children: screens),
           ),
         ],
       ),
       bottomNavigationBar: NavigationBar(
         height: 70,
         selectedIndex: _selectedIndex,
-        onDestinationSelected: (index) =>
-            setState(() => _selectedIndex = index),
+        onDestinationSelected: _onItemTapped,
         backgroundColor: Colors.black,
         indicatorColor: Colors.white60,
         destinations: const [
