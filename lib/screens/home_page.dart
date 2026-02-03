@@ -37,11 +37,67 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: _activePageKey != null && pageBuilders.containsKey(_activePageKey)
-          ? pageBuilders[_activePageKey]!()
-          : buildExcerciseGrid(context),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * .84,
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "Search exercises",
+                prefixIcon: const Icon(Icons.search),
+                filled: true,
+                fillColor: MaterialStateColor.resolveWith((
+                  Set<MaterialState> states,
+                ) {
+                  if (states.contains(MaterialState.focused)) {
+                    return Colors.white; // Color when focused
+                  }
+                  return const Color.fromARGB(
+                    255,
+                    233,
+                    233,
+                    233,
+                  ); // Color when NOT focused
+                }),
+                // enabledBorder: OutlineInputBorder(
+                //   borderRadius: BorderRadius.circular(12),
+                //   borderSide: const BorderSide(
+                //     color: Colors.black26,
+                //     width: 2,
+                //   ),
+                // ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(
+                    color: Colors.black38, // <-- border color when active
+                    width: 2,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              onChanged: (query) {
+                print("Searching: $query");
+              },
+            ),
+          ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child:
+                _activePageKey != null &&
+                    pageBuilders.containsKey(_activePageKey)
+                ? pageBuilders[_activePageKey]!()
+                : buildExcerciseGrid(context),
+          ),
+        ),
+      ],
     );
   }
 
