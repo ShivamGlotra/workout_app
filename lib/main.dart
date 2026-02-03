@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/screens/excerciseScreens/chest_page.dart';
+import 'package:workout_app/screens/excercise_library_screen.dart';
 import 'package:workout_app/shared/widgets/drawer.dart';
 import 'package:workout_app/screens/home_page.dart';
 import 'constants/pageHeading.dart';
@@ -53,7 +54,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
     final List<Widget> screens = [
       HomePage(reset: resetHome), // "Home"
-      HomePage(reset: resetHome),
+      ExcerciseLibraryScreen(reset: resetHome),
       HomePage(reset: resetHome),
       HomePage(reset: resetHome),
     ];
@@ -67,50 +68,18 @@ class _MainNavigationState extends State<MainNavigation> {
           child: Divider(height: 1, thickness: 0, color: Colors.black),
         ),
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 10),
-          // Search bar
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * .84,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: "Search exercises",
-                  prefixIcon: const Icon(Icons.search),
-                  filled: true,
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(
-                      color: Colors.black26,
-                      width: 2,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(
-                      color: Colors.black54, // <-- border color when active
-                      width: 2,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                onChanged: (query) {
-                  print("Searching: $query");
-                },
-              ),
+      body: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
+          children: [
+            // SizedBox(height: 10),
+            // Search bar
+            Expanded(
+              child: IndexedStack(index: _selectedIndex, children: screens),
             ),
-          ),
-          Expanded(
-            child: IndexedStack(index: _selectedIndex, children: screens),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: NavigationBar(
         height: 70,
