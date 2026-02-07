@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/screens/excerciseScreens/chest_page.dart';
 import 'package:workout_app/screens/excercise_library_screen.dart';
+import 'package:workout_app/screens/profile_page.dart';
 import 'package:workout_app/shared/widgets/drawer.dart';
 import 'package:workout_app/screens/home_page.dart';
 import 'constants/pageHeading.dart';
@@ -56,7 +57,7 @@ class _MainNavigationState extends State<MainNavigation> {
       HomePage(reset: resetHome), // "Home"
       ExcerciseLibraryScreen(reset: resetHome),
       HomePage(reset: resetHome),
-      HomePage(reset: resetHome),
+      ProfilePage(reset: resetHome),
     ];
     return Scaffold(
       drawer: CustomDrawer(),

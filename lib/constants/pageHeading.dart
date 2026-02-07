@@ -9,7 +9,7 @@ final List<PageHeading> pageHeadings = const [
   PageHeading(title: "Home", value: "Let's Workout"),
   PageHeading(title: "Chest", value: "Exercise Library"),
   PageHeading(title: "Back", value: "Workout Plans"),
-  PageHeading(title: "Shoulders", value: "BMI Calculator"),
+  PageHeading(title: "Shoulders", value: "Profile"),
   PageHeading(title: "Legs", value: "Calorie Calculator"),
   PageHeading(title: "Arms", value: "AI Coach"),
   PageHeading(title: "Core", value: "Profile"),

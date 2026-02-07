@@ -99,7 +99,7 @@ class _ExcerciseLibraryScreenState extends State<ExcerciseLibraryScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   "Exercise Library",
