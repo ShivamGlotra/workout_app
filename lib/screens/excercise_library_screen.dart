@@ -3,8 +3,7 @@ import 'package:workout_app/constants/excercises.dart';
 import 'package:workout_app/shared/widgets/excercise_widget.dart';
 
 class ExcerciseLibraryScreen extends StatefulWidget {
-  final bool reset;
-  const ExcerciseLibraryScreen({super.key, required this.reset});
+  const ExcerciseLibraryScreen({super.key});
 
   @override
   State<ExcerciseLibraryScreen> createState() => _ExcerciseLibraryScreenState();
