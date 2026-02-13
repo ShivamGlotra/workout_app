@@ -57,7 +57,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
     final List<Widget> screens = [
       HomePage(reset: resetHome), // "Home"
-      ExcerciseLibraryScreen(), // "Excercises"
+      CalorieCalculatorScreen(), // "Excercises"
       CustomWorkoutScreen(),
       ProfilePage(),
     ];
