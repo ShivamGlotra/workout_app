@@ -32,26 +32,21 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: const Center(
-                      child: Icon(
-                        Icons.person_outline,
-                        size: 40,
-                        color: Colors.black54,
-                      ),
+                      child: Icon(Icons.scale, size: 40, color: Colors.black54),
                     ),
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "Welcome To WeGoJim",
+                    "BMI calculator",
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    _groupValue == 0
-                        ? "Login to continue your fitness journey"
-                        : "Create an account to get started",
+                    "Calculate your Body Mass Index to assess your body weight category",
                     style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -88,9 +83,9 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
                     groupValue: _groupValue,
                     children: {
                       0: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          "Login",
+                          "Metric (Kg,cm)",
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -98,9 +93,9 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
                         ),
                       ),
                       1: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          "Sign Up",
+                          "Imperial (lbs,in)",
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -113,7 +108,7 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
                     },
                   ),
                   SizedBox(height: 20),
-                  _groupValue == 0 ? metric() : imperial(),
+                  calculator(),
                 ],
               ),
             ),
@@ -123,17 +118,20 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
     );
   }
 
-  Widget metric() {
+  Widget calculator() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text("Email", style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(
+          "Height${_groupValue == 0 ? " (cm)" : " (inches)"}",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         SizedBox(height: 8),
         SizedBox(
           height: 40,
           child: TextField(
             decoration: InputDecoration(
-              hintText: "johndoe@mail.com",
+              hintText: _groupValue == 0 ? " 170" : " 67",
               hintStyle: TextStyle(color: Colors.grey.shade600),
               filled: true,
               fillColor: Colors.grey.shade200,
@@ -141,24 +139,22 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide.none,
               ),
-              prefixIcon: Icon(
-                Icons.mail_outline_rounded,
-                color: Colors.grey,
-                size: 15,
-              ),
               // isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 0),
+              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
             ),
           ),
         ),
         SizedBox(height: 10),
-        Text("Password", style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(
+          "Weight${_groupValue == 0 ? " (kg)" : " (lbs)"}",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         SizedBox(height: 8),
         SizedBox(
           height: 40,
           child: TextField(
             decoration: InputDecoration(
-              hintText: "*********",
+              hintText: _groupValue == 0 ? " 70" : " 154",
               hintStyle: TextStyle(color: Colors.grey.shade600),
               filled: true,
               fillColor: Colors.grey.shade200,
@@ -166,13 +162,8 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide.none,
               ),
-              prefixIcon: Icon(
-                Icons.lock_outline,
-                color: Colors.grey,
-                size: 15,
-              ),
               // isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 0),
+              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
             ),
           ),
         ),
@@ -187,102 +178,7 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: Text("Login"),
-        ),
-      ],
-    );
-  }
-
-  Widget imperial() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text("Email", style: TextStyle(fontWeight: FontWeight.bold)),
-        SizedBox(height: 8),
-        SizedBox(
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "John Doe",
-              hintStyle: TextStyle(color: Colors.grey.shade600),
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-              prefixIcon: Icon(
-                Icons.mail_outline_rounded,
-                color: Colors.grey,
-                size: 15,
-              ),
-              // isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 0),
-            ),
-          ),
-        ),
-        SizedBox(height: 10),
-        Text("Full Name", style: TextStyle(fontWeight: FontWeight.bold)),
-        SizedBox(height: 10),
-        SizedBox(
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "johndoe@mail.com",
-              hintStyle: TextStyle(color: Colors.grey.shade600),
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-              prefixIcon: Icon(
-                Icons.mail_outline_rounded,
-                color: Colors.grey,
-                size: 15,
-              ),
-              // isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 0),
-            ),
-          ),
-        ),
-        SizedBox(height: 10),
-        Text("Password", style: TextStyle(fontWeight: FontWeight.bold)),
-        SizedBox(height: 8),
-        SizedBox(
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "*********",
-              hintStyle: TextStyle(color: Colors.grey.shade600),
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-              prefixIcon: Icon(
-                Icons.lock_outline,
-                color: Colors.grey,
-                size: 15,
-              ),
-              // isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 0),
-            ),
-          ),
-        ),
-        SizedBox(height: 15),
-        TextButton(
-          onPressed: () => (),
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.black,
-            foregroundColor: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          child: Text("Create Account"),
+          child: Text("Calculate BMI"),
         ),
       ],
     );
