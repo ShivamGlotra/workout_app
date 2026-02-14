@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/screens/ai_bot_screen.dart';
+import 'package:workout_app/screens/calorie_calculator.dart';
 import 'package:workout_app/screens/custom_workout.dart';
 import 'package:workout_app/screens/excerciseScreens/chest_page.dart';
 import 'package:workout_app/screens/excercise_library_screen.dart';
@@ -56,8 +58,8 @@ class _MainNavigationState extends State<MainNavigation> {
 
     final List<Widget> screens = [
       HomePage(reset: resetHome), // "Home"
-      ExcerciseLibraryScreen(), // "Excercises"
-      CustomWorkoutScreen(),
+      AiBotScreen(), // "Excercises"
+      CalorieCalculatorScreen(),
       ProfilePage(),
     ];
     return Scaffold(
