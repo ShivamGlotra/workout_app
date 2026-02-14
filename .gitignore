@@ -69,3 +69,9 @@ GoogleService-Info.plist
 # OS files
 .DS_Store
 Thumbs.db
+
+# Flutter desktop generated files
+/linux/flutter/generated_plugin_registrant.*
+/linux/flutter/generated_plugins.cmake
+/windows/flutter/generated_plugin_registrant.*
+/windows/flutter/generated_plugins.cmake
