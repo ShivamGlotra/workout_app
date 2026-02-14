@@ -10,7 +10,8 @@ class CalorieCalculatorScreen extends StatefulWidget {
 
 class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
   int? _selectedGender;
-  String selectedValue = 'Sedentary (little or no exercise)';
+  String selectedActivityValue = 'Sedentary (little or no exercise)';
+  String selectedGoalValue = 'Maintain weight';
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -193,7 +194,7 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
 
           child: DropdownMenu<String>(
             width: MediaQuery.widthOf(context) * .7,
-            initialSelection: selectedValue,
+            initialSelection: selectedActivityValue,
             menuHeight: 250,
             menuStyle: MenuStyle(
               padding: WidgetStateProperty.all(EdgeInsets.zero),
@@ -228,7 +229,7 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
                   return DropdownMenuEntry<String>(value: value, label: value);
                 }).toList(),
             onSelected: (String? value) {
-              setState(() => selectedValue = value!);
+              setState(() => selectedActivityValue = value!);
             },
           ),
         ),
@@ -239,7 +240,7 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
           height: 40,
           child: DropdownMenu<String>(
             width: MediaQuery.widthOf(context) * .7,
-            initialSelection: selectedValue,
+            initialSelection: selectedGoalValue,
             menuHeight: 250,
             menuStyle: MenuStyle(
               padding: WidgetStateProperty.all(EdgeInsets.zero),
@@ -272,7 +273,7 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
                   return DropdownMenuEntry<String>(value: value, label: value);
                 }).toList(),
             onSelected: (String? value) {
-              setState(() => selectedValue = value!);
+              setState(() => selectedGoalValue = value!);
             },
           ),
         ),
