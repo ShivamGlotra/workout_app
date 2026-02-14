@@ -17,7 +17,7 @@ build/
 
 # IDEs
 .idea/
-.vscode/
+# .vscode/
 *.iml
 
 # Android
