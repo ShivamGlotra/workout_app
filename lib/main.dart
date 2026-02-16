@@ -58,8 +58,8 @@ class _MainNavigationState extends State<MainNavigation> {
 
     final List<Widget> screens = [
       HomePage(reset: resetHome), // "Home"
-      AiBotScreen(), // "Excercises"
-      CalorieCalculatorScreen(),
+      ExcerciseLibraryScreen(), // "Excercises"
+      CustomWorkoutScreen(),
       ProfilePage(),
     ];
     return Scaffold(

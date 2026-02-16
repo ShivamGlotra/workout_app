@@ -36,7 +36,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             height: 80,
             child: Center(
               child: Text(
-                "Let's Workout",
+                "GymCoach",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 24,

@@ -6,7 +6,7 @@ class PageHeading {
 }
 
 final List<PageHeading> pageHeadings = const [
-  PageHeading(title: "Home", value: "Let's Workout"),
+  PageHeading(title: "Home", value: "GymCoach"),
   PageHeading(title: "Chest", value: "Exercise Library"),
   PageHeading(title: "Back", value: "Workout Plans"),
   PageHeading(title: "Shoulders", value: "Profile"),
