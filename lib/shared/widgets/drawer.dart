@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:workout_app/screens/bmi_calculator.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});

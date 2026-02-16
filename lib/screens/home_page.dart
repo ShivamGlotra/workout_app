@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workout_app/constants/app_routes.dart';
 import 'package:workout_app/routing/page_routes.dart';
-import 'package:workout_app/screens/excerciseScreens/chest_page.dart';
 
 class HomePage extends StatefulWidget {
   final bool reset;
@@ -81,9 +79,7 @@ class _HomePageState extends State<HomePage> {
                   borderSide: BorderSide(color: Colors.grey.shade300),
                 ),
               ),
-              onChanged: (query) {
-                print("Searching: $query");
-              },
+              onChanged: (query) {},
             ),
           ),
         ),
