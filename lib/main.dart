@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'LetsWorkout',
+      title: 'GymCoach',
       theme: ThemeData(
         useMaterial3: true,
         navigationBarTheme: NavigationBarThemeData(
