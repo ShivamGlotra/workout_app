@@ -119,10 +119,13 @@ class _ExcerciseLibraryScreenState extends State<ExcerciseLibraryScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
+              style: const TextStyle(fontSize: 15),
+
               onChanged: (value) {
                 setState(() => searchQuery = value);
               },
               decoration: InputDecoration(
+                isDense: true,
                 hintText: "Search exercises...",
                 prefixIcon: Icon(Icons.search, color: Colors.grey.shade600),
                 suffixIcon: searchQuery.isNotEmpty
@@ -137,7 +140,7 @@ class _ExcerciseLibraryScreenState extends State<ExcerciseLibraryScreen> {
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(color: Colors.grey.shade300),
                 ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                contentPadding: const EdgeInsets.symmetric(vertical: 10),
               ),
             ),
           ),
