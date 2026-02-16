@@ -46,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           SizedBox(height: 20),
                           Text(
-                            "Welcome To WeGoJim",
+                            "Welcome To GymCoach",
                             style: Theme.of(context).textTheme.headlineSmall
                                 ?.copyWith(fontWeight: FontWeight.bold),
                           ),
