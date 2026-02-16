@@ -1,0 +1,28 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  check-quality:
+    name: Check code quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+
+        with:
+          flutter-version: "3.41.1"
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify code formatting
+        run: dart format --output=none .
+
+      - name: Static Analysis
+        run: flutter analyze --no-fatal-warnings
