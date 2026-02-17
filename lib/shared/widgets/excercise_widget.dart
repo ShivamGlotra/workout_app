@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/screens/excercise_details_screen.dart';
 
 class ListItemData {
   final String title;
@@ -26,14 +27,24 @@ class ExcerciseWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
-          child: ListTile(
-            leading: SizedBox(
-              width: 40,
-              height: 30,
-              child: Image.asset(data[index].image),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExcerciseDetailsScreen(),
+                ),
+              );
+            },
+            child: ListTile(
+              leading: SizedBox(
+                width: 40,
+                height: 30,
+                child: Image.asset(data[index].image),
+              ),
+              title: Text(data[index].title),
+              trailing: Icon(Icons.circle, color: data[index].colorCode),
             ),
-            title: Text(data[index].title),
-            trailing: Icon(Icons.circle, color: data[index].colorCode),
           ),
         );
       },
