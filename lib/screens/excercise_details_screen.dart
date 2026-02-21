@@ -40,8 +40,8 @@ class _ExcerciseDetailsScreenState extends State<ExcerciseDetailsScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         image: DecorationImage(
-                          image: AssetImage('assets/images/back.png'),
-                          fit: BoxFit.cover,
+                          image: AssetImage('assets/images/shoulder_press.gif'),
+                          fit: BoxFit.fitHeight,
                         ),
                       ),
                     ),
