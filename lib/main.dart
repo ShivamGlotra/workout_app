@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/screens/ai_bot_screen.dart';
+import 'package:workout_app/screens/bmi_calculator.dart';
+import 'package:workout_app/screens/calorie_calculator.dart';
 import 'package:workout_app/screens/custom_workout.dart';
 import 'package:workout_app/screens/excercise_library_screen.dart';
 import 'package:workout_app/screens/profile_page.dart';
@@ -27,8 +30,13 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      // initialRoute: '/',
       home: const MainNavigation(),
+      routes: {
+        '/bmi': (context) => BmiCalculatorScreen(),
+        '/calorie': (context) => CalorieCalculatorScreen(),
+        '/aiCoach': (context) => AiBotScreen(),
+      },
     );
   }
 }
@@ -43,10 +51,38 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
+
+  void _onDrawerItemSelected(String route) {
+    Navigator.pop(context); // close drawer
+    print("Route Name $route");
+    switch (route) {
+      case 'Home':
+        setState(() => _selectedIndex = 0);
+        break;
+      case 'Exercise Library':
+        setState(() => _selectedIndex = 1);
+        break;
+      case 'Workout Plans':
+        setState(() => _selectedIndex = 2);
+        break;
+      case 'Profile':
+        setState(() => _selectedIndex = 3);
+        break;
+      case 'BMI Calculator':
+        Navigator.pushNamed(context, '/bmi');
+        break;
+      case 'Calorie Calculator':
+        Navigator.pushNamed(context, '/calorie');
+        break;
+      case 'AI Coach':
+        Navigator.pushNamed(context, '/aiCoach');
+        break;
+    }
   }
 
   @override
@@ -60,7 +96,7 @@ class _MainNavigationState extends State<MainNavigation> {
       ProfilePage(),
     ];
     return Scaffold(
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer(onSelect: _onDrawerItemSelected),
       appBar: AppBar(
         title: getPageHeadingText(pageHeadings[_selectedIndex]),
         centerTitle: true,
@@ -71,7 +107,7 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onTap: () => FocusScope.of(context).unfocus(),
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Column(
           children: [
             // SizedBox(height: 10),
@@ -85,7 +121,9 @@ class _MainNavigationState extends State<MainNavigation> {
       bottomNavigationBar: NavigationBar(
         height: 70,
         selectedIndex: _selectedIndex,
-        onDestinationSelected: _onItemTapped,
+        onDestinationSelected: (index) {
+          setState(() => _selectedIndex = index);
+        },
         backgroundColor: Colors.black,
         indicatorColor: Colors.white60,
         destinations: const [

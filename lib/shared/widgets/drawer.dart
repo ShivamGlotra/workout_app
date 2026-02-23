@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomDrawer extends StatefulWidget {
-  const CustomDrawer({super.key});
+class CustomDrawer extends StatelessWidget {
+  final Function(String) onSelect;
 
-  @override
-  State<CustomDrawer> createState() => _CustomDrawerState();
-}
+  CustomDrawer({super.key, required this.onSelect});
 
-class _CustomDrawerState extends State<CustomDrawer> {
   final List<Map<String, dynamic>> drawerButtons = [
     {"title": "Home", "icon": Icons.home},
     {"title": "Exercise Library", "icon": Icons.fitness_center},
@@ -18,13 +15,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
     {"title": "Profile", "icon": Icons.person},
   ];
 
-  int _selectedIndex = 0;
-  void _onItemTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-      Navigator.pop(context);
-    });
-  }
+  final int _selectedIndex = 0;
+  // void _onItemTap(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //     Navigator.pop(context);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +58,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 data['icon'],
                 data['title'],
                 _selectedIndex == index,
-                () => _onItemTap(index),
+                () => onSelect(data['title']),
               );
             }).toList(),
           ),

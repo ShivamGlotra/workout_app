@@ -13,91 +13,94 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
   String selectedGoalValue = 'Maintain weight';
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 360),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.calculate_outlined,
-                                size: 40,
-                                color: Colors.black54,
+    return Scaffold(
+      appBar: AppBar(title: Text("Calorie Calculator")),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 360),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade300,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.calculate_outlined,
+                                  size: 40,
+                                  color: Colors.black54,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            "Calorie calculator",
-                            style: Theme.of(context).textTheme.headlineSmall
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            "Calculate your daily caloric needs based on your goals and activity level",
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 14,
+                            SizedBox(height: 20),
+                            Text(
+                              "Calorie calculator",
+                              style: Theme.of(context).textTheme.headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.bold),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      padding: EdgeInsets.only(
-                        top: 20,
-                        bottom: 20,
-                        left: 40,
-                        right: 40,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: const Color.fromARGB(
-                            255,
-                            221,
-                            219,
-                            219,
-                          ), // border color
-                          width: 1, // border width
+                            SizedBox(height: 8),
+                            Text(
+                              "Calculate your daily caloric needs based on your goals and activity level",
+                              style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontSize: 14,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
-                        borderRadius: BorderRadius.circular(
-                          12,
-                        ), // rounded corners
                       ),
+                      SizedBox(height: 10),
+                      Container(
+                        padding: EdgeInsets.only(
+                          top: 20,
+                          bottom: 20,
+                          left: 40,
+                          right: 40,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: const Color.fromARGB(
+                              255,
+                              221,
+                              219,
+                              219,
+                            ), // border color
+                            width: 1, // border width
+                          ),
+                          borderRadius: BorderRadius.circular(
+                            12,
+                          ), // rounded corners
+                        ),
 
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [SizedBox(height: 10), calculator()],
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [SizedBox(height: 10), calculator()],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
