@@ -93,6 +93,7 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
                           children: [SizedBox(height: 10), calculator()],
                         ),
                       ),
+                      SizedBox(height: 50),
                     ],
                   ),
                 ),
