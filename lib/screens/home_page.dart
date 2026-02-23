@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
           child: SizedBox(
             width: MediaQuery.of(context).size.width * .84,
+            height: MediaQuery.of(context).size.width * .05,
             // child: TextField(
             //   decoration: InputDecoration(
             //     hintText: "Search exercises",
