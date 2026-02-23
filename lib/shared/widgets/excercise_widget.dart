@@ -32,7 +32,8 @@ class ExcerciseWidget extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ExcerciseDetailsScreen(),
+                  builder: (context) =>
+                      ExcerciseDetailsScreen(exerciseName: data[index].title),
                 ),
               );
             },

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ExcerciseDetailsScreen extends StatefulWidget {
-  const ExcerciseDetailsScreen({super.key});
+  final String exerciseName;
+  const ExcerciseDetailsScreen({super.key, required this.exerciseName});
 
   @override
   State<ExcerciseDetailsScreen> createState() => _ExcerciseDetailsScreenState();
@@ -12,7 +13,7 @@ class _ExcerciseDetailsScreenState extends State<ExcerciseDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("{Exercise Name}"),
+        title: Text(widget.exerciseName, style: TextStyle(fontSize: 16)),
         actions: [
           IconButton(icon: Icon(Icons.favorite_border), onPressed: () => ()),
           IconButton(icon: Icon(Icons.add), onPressed: () => ()),
