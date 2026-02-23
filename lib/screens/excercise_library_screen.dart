@@ -12,6 +12,16 @@ class ExcerciseLibraryScreen extends StatefulWidget {
 class _ExcerciseLibraryScreenState extends State<ExcerciseLibraryScreen> {
   bool showFilters = false;
   String searchQuery = "";
+
+  final TextEditingController searchFieldController = TextEditingController();
+  // final screenWidth = MediaQuery.of(context).size.width;
+
+  @override
+  void dispose() {
+    searchFieldController.dispose();
+    super.dispose();
+  }
+
   final Set<String> selectedFilters = {
     "Chest",
     "Legs",
@@ -89,7 +99,6 @@ class _ExcerciseLibraryScreenState extends State<ExcerciseLibraryScreen> {
   @override
   Widget build(BuildContext context) {
     final filteredExercises = getFilteredExercises();
-    // final screenWidth = MediaQuery.of(context).size.width;
 
     return SingleChildScrollView(
       child: Column(
@@ -119,8 +128,8 @@ class _ExcerciseLibraryScreenState extends State<ExcerciseLibraryScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
+              controller: searchFieldController,
               style: const TextStyle(fontSize: 15),
-
               onChanged: (value) {
                 setState(() => searchQuery = value);
               },
@@ -132,7 +141,10 @@ class _ExcerciseLibraryScreenState extends State<ExcerciseLibraryScreen> {
                     ? IconButton(
                         icon: const Icon(Icons.clear),
                         onPressed: () {
-                          setState(() => searchQuery = "");
+                          setState(() {
+                            searchQuery = "";
+                            searchFieldController.clear();
+                          });
                         },
                       )
                     : null,
@@ -164,12 +176,13 @@ class _ExcerciseLibraryScreenState extends State<ExcerciseLibraryScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          selectedFilters.clear();
-                          selectedFilters.addAll(allMuscles);
+                          selectedFilters.length > 1
+                              ? selectedFilters.clear()
+                              : selectedFilters.addAll(allMuscles);
                         });
                       },
                       child: Text(
-                        "Clear All",
+                        selectedFilters.isNotEmpty ? "Clear All" : "Select All",
                         style: TextStyle(
                           color: Colors.blue.shade600,
                           fontWeight: FontWeight.w600,
