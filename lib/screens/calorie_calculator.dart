@@ -14,7 +14,7 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Calorie Calculator")),
+      appBar: AppBar(title: Text("Calorie Calculator"), centerTitle: true),
       body: Column(
         children: [
           Expanded(

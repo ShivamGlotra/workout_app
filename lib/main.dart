@@ -59,7 +59,6 @@ class _MainNavigationState extends State<MainNavigation> {
 
   void _onDrawerItemSelected(String route) {
     Navigator.pop(context); // close drawer
-    print("Route Name $route");
     switch (route) {
       case 'Home':
         setState(() => _selectedIndex = 0);
@@ -153,9 +152,6 @@ class _MainNavigationState extends State<MainNavigation> {
   }
 
   Widget getPageHeadingText(PageHeading pageHeading) {
-    return Text(
-      pageHeading.value,
-      style: const TextStyle(fontWeight: FontWeight.bold),
-    );
+    return Text(pageHeading.value, style: const TextStyle());
   }
 }

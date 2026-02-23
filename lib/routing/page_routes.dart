@@ -3,7 +3,6 @@ import 'package:workout_app/constants/app_routes.dart';
 import 'package:workout_app/screens/excerciseScreens/arms_page.dart';
 import 'package:workout_app/screens/excerciseScreens/cardio_page.dart';
 import 'package:workout_app/screens/excerciseScreens/core_page.dart';
-import 'package:workout_app/screens/home_page.dart';
 import 'package:workout_app/screens/excerciseScreens/legs_page.dart';
 import 'package:workout_app/screens/excerciseScreens/quick_workout_page.dart';
 import 'package:workout_app/screens/excerciseScreens/shoulders_page.dart';

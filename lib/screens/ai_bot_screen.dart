@@ -32,7 +32,7 @@ class _AiBotScreenState extends State<AiBotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("AI Coach")),
+      appBar: AppBar(title: Text("AI Coach"), centerTitle: true),
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 360),
