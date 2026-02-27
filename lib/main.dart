@@ -63,7 +63,7 @@ class _MainNavigationState extends State<MainNavigation> {
       case 'Home':
         setState(() => _selectedIndex = 0);
         break;
-      case 'Exercise Library':
+      case 'Exercise Plans':
         setState(() => _selectedIndex = 1);
         break;
       case 'Workout Plans':
