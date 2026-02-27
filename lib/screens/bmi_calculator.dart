@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_app/widgets/number_stepper.dart';
 
 class BmiCalculatorScreen extends StatefulWidget {
   const BmiCalculatorScreen({super.key});
@@ -136,23 +137,7 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
-        SizedBox(
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: _groupValue == 0 ? " 170" : " 67",
-              hintStyle: TextStyle(color: Colors.grey.shade600),
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-              // isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-            ),
-          ),
-        ),
+        NumberStepper(groupValue: _groupValue),
         SizedBox(height: 10),
         Text(
           "Weight${_groupValue == 0 ? " (kg)" : " (lbs)"}",
