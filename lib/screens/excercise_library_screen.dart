@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/constants/excercises.dart';
-import 'package:workout_app/shared/widgets/excercise_widget.dart';
+import 'package:workout_app/widgets/excercise_widget.dart';
 
 class ExcerciseLibraryScreen extends StatefulWidget {
   const ExcerciseLibraryScreen({super.key});

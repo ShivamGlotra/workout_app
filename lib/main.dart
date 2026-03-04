@@ -5,7 +5,7 @@ import 'package:workout_app/screens/calorie_calculator.dart';
 import 'package:workout_app/screens/custom_workout.dart';
 import 'package:workout_app/screens/excercise_library_screen.dart';
 import 'package:workout_app/screens/profile_page.dart';
-import 'package:workout_app/shared/widgets/drawer.dart';
+import 'package:workout_app/widgets/drawer.dart';
 import 'package:workout_app/screens/home_page.dart';
 import 'constants/page_heading.dart';
 
