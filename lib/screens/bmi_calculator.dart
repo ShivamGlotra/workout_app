@@ -13,8 +13,8 @@ class BmiCalculatorScreen extends StatefulWidget {
 
 class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
   int? _groupValue = 0;
-  int height = 0;
-  int weight = 0;
+  int userHeight = 0;
+  int userWeight = 0;
   bool isMetric = false;
   bool isImperial = false;
   double bmiResult = 0;
@@ -81,18 +81,24 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
                           customWidget: calculator(),
                           showSegmentControl: true,
                         ),
-                        SizedBox(height: userClickedCalculate ? 20 : 30),
+                        SizedBox(
+                          height: userClickedCalculate
+                              ? 20
+                              : MediaQuery.of(context).padding.bottom + 30,
+                        ),
                         if (userClickedCalculate) ...[
                           widgetContainer(
                             customWidget: bmiResultWidget(
                               _groupValue,
-                              height,
-                              weight,
+                              userHeight,
+                              userWeight,
                             ),
                           ),
                           SizedBox(height: 20),
                           widgetContainer(customWidget: bmiCategoryBlock()),
-                          SizedBox(height: 30),
+                          SizedBox(
+                            height: MediaQuery.of(context).padding.bottom + 30,
+                          ),
                         ],
                       ],
                     ),
@@ -184,7 +190,7 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
           imperialValue: 0, // 65
           onChanged: (value) => setState(() {
             _groupValue == 0 ? isMetric = true : isImperial = true;
-            height = value;
+            userHeight = value;
           }),
         ),
         SizedBox(height: 10),
@@ -198,33 +204,35 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
           metricValue: 0, // 70
           imperialValue: 0, // 154
           onChanged: (value) => setState(() {
-            weight = value;
+            userWeight = value;
           }),
         ),
         SizedBox(height: 15),
         TextButton(
           onPressed: () {
-            if (height == 0 || weight == 0) {
-              userClickedCalculate = false;
+            if (userHeight == 0 || userWeight == 0) {
               _showErrorDialog(context);
               setState(() {
                 bmiResult = 0;
               });
             }
             // 1. Convert height from cm to meters if necessary
-            double heightInMeters = height / 100;
-
+            double heightInMeters = userHeight / 100;
+            double bmiValue = 0.0;
             // 2. Calculate BMI
-            double bmiValue = weight / (heightInMeters * heightInMeters);
+            if (heightInMeters > 0) {
+              bmiValue = userWeight / (heightInMeters * heightInMeters);
+            }
 
             // 3. Update the UI
             setState(() {
               // Check if the result is a valid number, otherwise default to 0.0
-              if (bmiValue.isFinite && !bmiValue.isNaN) {
+              if (bmiValue.isFinite && !bmiValue.isNaN && bmiValue > 0.0) {
                 bmiResult = (bmiValue * 100).roundToDouble() / 100;
                 userClickedCalculate = true;
               } else {
                 bmiResult = 0.0;
+                userClickedCalculate = false;
               }
             });
           },
