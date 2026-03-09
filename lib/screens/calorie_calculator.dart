@@ -1,5 +1,5 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:workout_app/widgets/number_stepper.dart';
 
 class CalorieCalculatorScreen extends StatefulWidget {
   const CalorieCalculatorScreen({super.key});
@@ -9,6 +9,9 @@ class CalorieCalculatorScreen extends StatefulWidget {
 }
 
 class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
+  int userAge = 0;
+  int userHeight = 0;
+  int userWeight = 0;
   int? _selectedGender;
   String selectedActivityValue = 'Sedentary (little or no exercise)';
   String selectedGoalValue = 'Maintain weight';
@@ -72,17 +75,23 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
                       ),
                       SizedBox(height: 10),
                       widgetContainer(customWidget: calculator()),
-                      SizedBox(height: 20),
-                      widgetContainer(customWidget: calorieResultsWidget()),
-                      SizedBox(height: 20),
-                      widgetContainer(
-                        customWidget: understandingResultWidget(),
-                      ),
-                      SizedBox(height: 20),
-                      widgetContainer(customWidget: macronutritionWidget()),
                       SizedBox(
-                        height: MediaQuery.of(context).padding.bottom + 30,
+                        height: userClickedCalculate
+                            ? 20
+                            : MediaQuery.of(context).padding.bottom + 30,
                       ),
+                      if (userClickedCalculate) ...[
+                        widgetContainer(customWidget: calorieResultsWidget()),
+                        SizedBox(height: 20),
+                        widgetContainer(
+                          customWidget: understandingResultWidget(),
+                        ),
+                        SizedBox(height: 20),
+                        widgetContainer(customWidget: macronutritionWidget()),
+                        SizedBox(
+                          height: MediaQuery.of(context).padding.bottom + 30,
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -113,27 +122,28 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
   }
 
   Widget calculator() {
+    late List<String> activityLevels = [
+      'Sedentary (little or no exercise)',
+      'Lightly active (light exercise 1-3 days/week)',
+      'Moderately active (moderate exercise 3-5 days/week)',
+      'Very active (hard exercise 6-7 days/week)',
+      'Extra active (very hard exercise & physical job)',
+    ];
+    late List<String> goals = [
+      'Lose weight (caloric deficit)',
+      'Maintain weight',
+      'Gain weight (caloric surplus)',
+    ];
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Age (years)", style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 8),
-        SizedBox(
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "25",
-              hintStyle: TextStyle(color: Colors.grey.shade600),
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-              // isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-            ),
-          ),
+        NumberStepper(
+          metricValue: userAge,
+          onChanged: (value) => setState(() {
+            userAge = value;
+          }),
         ),
         SizedBox(height: 10),
         Text("Gender", style: TextStyle(fontWeight: FontWeight.bold)),
@@ -159,152 +169,125 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
         SizedBox(height: 10),
         Text("height (cm)", style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 8),
-        SizedBox(
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "170",
-              hintStyle: TextStyle(color: Colors.grey.shade600),
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-              // isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-            ),
-          ),
+        NumberStepper(
+          metricValue: userHeight,
+          onChanged: (value) => setState(() {
+            userHeight = value;
+          }),
         ),
         SizedBox(height: 10),
         Text("Weight (kg)", style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 8),
-        SizedBox(
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "70",
-              hintStyle: TextStyle(color: Colors.grey.shade600),
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-              // isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-            ),
-          ),
+        NumberStepper(
+          metricValue: userWeight,
+          onChanged: (value) => setState(() {
+            userWeight = value;
+          }),
         ),
         SizedBox(height: 10),
         Text("Activity Level", style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 8),
-        SizedBox(
-          height: 40,
-
-          child: DropdownMenu<String>(
-            width: MediaQuery.widthOf(context) * .7,
-            initialSelection: selectedActivityValue,
-            menuHeight: 250,
-            menuStyle: MenuStyle(
-              padding: WidgetStateProperty.all(EdgeInsets.zero),
-              backgroundColor: WidgetStateProperty.all(Colors.white),
-              elevation: WidgetStateProperty.all(8), // Subtle shadow
-              shape: WidgetStateProperty.all(
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              ),
-            ),
-
-            inputDecorationTheme: InputDecorationTheme(
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              constraints: const BoxConstraints(maxHeight: 40),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ), // This creates the "text box" look
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 5,
-                vertical: 0,
-              ),
-            ),
-            dropdownMenuEntries:
-                [
-                  'Sedentary (little or no exercise)',
-                  'Lightly active (light exercise 1-3 days/week)',
-                  'Moderately active (moderate exercise 3-5 days/week)',
-                  'Very active (hard exercise 6-7 days/week)',
-                  'Extra active (very hard exercise & physical job)',
-                ].map((String value) {
-                  return DropdownMenuEntry<String>(value: value, label: value);
-                }).toList(),
-            onSelected: (String? value) {
-              setState(() => selectedActivityValue = value!);
-            },
-          ),
+        customDropdownBox(
+          dropdownList: activityLevels,
+          selectedValue: selectedActivityValue,
+          onChanged: (value) {
+            if (value == null) return;
+            setState(() => selectedActivityValue = value);
+          },
         ),
         SizedBox(height: 10),
         Text("Goal", style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 8),
-        SizedBox(
-          height: 40,
-          child: DropdownMenu<String>(
-            width: MediaQuery.widthOf(context) * .7,
-            initialSelection: selectedGoalValue,
-            menuHeight: 250,
-            menuStyle: MenuStyle(
-              padding: WidgetStateProperty.all(EdgeInsets.zero),
-              backgroundColor: WidgetStateProperty.all(Colors.white),
-              elevation: WidgetStateProperty.all(8), // Subtle shadow
-              shape: WidgetStateProperty.all(
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              ),
-            ),
-
-            inputDecorationTheme: InputDecorationTheme(
-              filled: true,
-              fillColor: Colors.grey.shade200,
-              constraints: const BoxConstraints(maxHeight: 40),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ), // This creates the "text box" look
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 5,
-                vertical: 0,
-              ),
-            ),
-            dropdownMenuEntries:
-                [
-                  'Lose weight (caloric deficit)',
-                  'Maintain weight',
-                  'Gain weight (caloric surplus)',
-                ].map((String value) {
-                  return DropdownMenuEntry<String>(value: value, label: value);
-                }).toList(),
-            onSelected: (String? value) {
-              setState(() => selectedGoalValue = value!);
-            },
-          ),
+        customDropdownBox(
+          dropdownList: goals,
+          selectedValue: selectedGoalValue,
+          onChanged: (value) {
+            if (value == null) return;
+            setState(() => selectedGoalValue = value);
+          },
         ),
         SizedBox(height: 30),
-        TextButton(
-          onPressed: () => (setState(() {
-            bmrRate = 1500 + Random().nextInt(2000 - 1500 + 1);
-            maintainanceCalorie = 3200 + Random().nextInt(3500 - 3200 + 1);
-            targetCalories = 2600 + Random().nextInt(3000 - 2600 + 1);
-          })),
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.black,
-            foregroundColor: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+        SizedBox(
+          width: MediaQuery.widthOf(context) * .65,
+          child: TextButton(
+            onPressed: () => (setState(() {
+              final bool isValidGender =
+                  _selectedGender == 0 || _selectedGender == 1;
+
+              if (userAge < 1 ||
+                  userHeight < 1 ||
+                  userWeight < 1 ||
+                  !isValidGender) {
+                _showErrorDialog(context);
+                userClickedCalculate = false;
+                return;
+              }
+
+              bmrRate = calculateBmrRate(
+                userAge,
+                userHeight,
+                userWeight,
+                _selectedGender,
+              );
+              maintainanceCalorie =
+                  (bmrRate * getActivityMultiplyer(selectedActivityValue))
+                      .round();
+              targetCalories = getTargetCalories(
+                maintainanceCalorie,
+                selectedGoalValue,
+              );
+              userClickedCalculate = true;
+            })),
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
+            child: Text("Calculate Calories"),
           ),
-          child: Text("Calculate Calories"),
         ),
       ],
+    );
+  }
+
+  Widget customDropdownBox({
+    required List<String> dropdownList,
+    required String? selectedValue,
+    required ValueChanged<String?> onChanged,
+  }) {
+    final String? safeInitialSelection = dropdownList.contains(selectedValue)
+        ? selectedValue
+        : (dropdownList.isNotEmpty ? dropdownList.first : null);
+
+    return DropdownMenu<String>(
+      width: MediaQuery.widthOf(context) * .65,
+      initialSelection: safeInitialSelection,
+      menuHeight: 250,
+      menuStyle: MenuStyle(
+        padding: WidgetStateProperty.all(EdgeInsets.zero),
+        backgroundColor: WidgetStateProperty.all(Colors.white),
+        elevation: WidgetStateProperty.all(8), // Subtle shadow
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: Colors.grey.shade200,
+        constraints: const BoxConstraints(maxHeight: 40),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ), // This creates the "text box" look
+        contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+      ),
+      dropdownMenuEntries: dropdownList.map((String value) {
+        return DropdownMenuEntry<String>(value: value, label: value);
+      }).toList(),
+      onSelected: onChanged,
     );
   }
 
@@ -511,13 +494,13 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
       {
         "title": "Proteins",
         "data":
-            "${(targetCalories * 0.32 / 4).round()}g (${((targetCalories * 0.32 / 4).round() * 4)} cal)",
+            "${(targetCalories * 0.30 / 4).round()}g (${((targetCalories * 0.30 / 4).round() * 4)} cal)",
         "color": Colors.blue,
       },
       {
         "title": "Carbohydrates",
         "data":
-            "${(targetCalories * 0.38 / 4).round()}g (${((targetCalories * 0.38 / 4).round() * 4)} cal)",
+            "${(targetCalories * 0.40 / 4).round()}g (${((targetCalories * 0.4 / 4).round() * 4)} cal)",
         "color": Colors.green,
       },
       {
@@ -579,6 +562,60 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  int calculateBmrRate(int age, int height, int weight, int? gender) {
+    double calculatedBmrRate =
+        10 * weight + 6.25 * height - 5 * age + (gender == 0 ? 5 : (-161));
+    return calculatedBmrRate.round();
+  }
+
+  double getActivityMultiplyer(String selectedActivityValue) {
+    switch (selectedActivityValue) {
+      case 'Sedentary (little or no exercise)':
+        return 1.2;
+      case 'Lightly active (light exercise 1-3 days/week)':
+        return 1.375;
+      case 'Moderately active (moderate exercise 3-5 days/week)':
+        return 1.55;
+      case 'Very active (hard exercise 6-7 days/week)':
+        return 1.725;
+      case 'Extra active (very hard exercise & physical job)':
+        return 1.9;
+      default:
+        return 1.2;
+    }
+  }
+
+  int getTargetCalories(int maintainanceCalorie, String selectedGoalValue) {
+    switch (selectedGoalValue) {
+      case "Lose weight (caloric deficit)":
+        return maintainanceCalorie - 500;
+      case "Maintain weight":
+        return maintainanceCalorie;
+      case "Gain weight (caloric surplus)":
+        return maintainanceCalorie + 500;
+      default:
+        return maintainanceCalorie;
+    }
+  }
+
+  void _showErrorDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Empty Value!!!"),
+          content: Text("Please fill in all the vlaues"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("OK", style: TextStyle(color: Colors.black)),
+            ),
+          ],
+        );
+      },
     );
   }
 }

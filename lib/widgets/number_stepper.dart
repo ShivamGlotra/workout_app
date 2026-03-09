@@ -8,7 +8,7 @@ class NumberStepper extends StatefulWidget {
 
   const NumberStepper({
     super.key,
-    required this.groupValue,
+    this.groupValue,
     this.metricValue = 0,
     this.imperialValue = 0,
     required this.onChanged,
