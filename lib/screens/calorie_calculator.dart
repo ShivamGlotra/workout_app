@@ -208,7 +208,7 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
         ),
         SizedBox(height: 30),
         SizedBox(
-          width: MediaQuery.widthOf(context) * .7,
+          width: MediaQuery.widthOf(context) * .65,
           child: TextButton(
             onPressed: () => (setState(() {
               final bool isValidGender =
@@ -263,7 +263,7 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
         : (dropdownList.isNotEmpty ? dropdownList.first : null);
 
     return DropdownMenu<String>(
-      width: MediaQuery.widthOf(context) * .7,
+      width: MediaQuery.widthOf(context) * .65,
       initialSelection: safeInitialSelection,
       menuHeight: 250,
       menuStyle: MenuStyle(
