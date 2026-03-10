@@ -89910,7 +89910,7 @@ l=j.c
 l.toString
 l=A.b7(l,B.cA,t.w).w
 k=A.lf(i,i,B.l,i,i,i,i,i,i,i,i,B.j,i,i,i,i,i,new A.a3(16,2,16,2),i,new A.bU(A.bJ(10),B.o),i,i,i,i,i,i)
-return A.b6(A.b([f,new A.O(i,8,i,i),new A.kO(i,e,0,new A.aiW(j),i),new A.O(i,10,i,i),d,b,new A.O(i,10,i,i),c,new A.O(i,8,i,i),new A.kO(i,s,0,new A.aiX(j),i),new A.O(i,10,i,i),r,new A.O(i,8,i,i),new A.kO(i,q,0,new A.aiO(j),i),new A.O(i,10,i,i),p,new A.O(i,8,i,i),o,new A.O(i,10,i,i),n,new A.O(i,8,i,i),m,new A.O(i,30,i,i),new A.O(l.a.a*0.7,i,A.ed(!1,A.a2("Calculate Calories",i,i,i,i,i,i),i,i,!0,i,new A.aiP(j),i,k),i)],a),B.ao,B.m,B.n)},
+return A.b6(A.b([f,new A.O(i,8,i,i),new A.kO(i,e,0,new A.aiW(j),i),new A.O(i,10,i,i),d,b,new A.O(i,10,i,i),c,new A.O(i,8,i,i),new A.kO(i,s,0,new A.aiX(j),i),new A.O(i,10,i,i),r,new A.O(i,8,i,i),new A.kO(i,q,0,new A.aiO(j),i),new A.O(i,10,i,i),p,new A.O(i,8,i,i),o,new A.O(i,10,i,i),n,new A.O(i,8,i,i),m,new A.O(i,30,i,i),new A.O(l.a.a*0.65,i,A.ed(!1,A.a2("Calculate Calories",i,i,i,i,i,i),i,i,!0,i,new A.aiP(j),i,k),i)],a),B.ao,B.m,B.n)},
 UW(a,b,c){var s,r,q,p,o=null,n=J.bz(a)
 if(n.q(a,c))s=c
 else s=n.gc2(a)?n.ga9(a):o
@@ -89921,7 +89921,7 @@ q=A.bJ(12)
 p=A.aAU(new A.dS(4,A.bJ(10),B.o),o,B.By,B.Gw,o,B.by,!0)
 n=n.ha(a,new A.aiZ(),t.lN)
 n=A.a8(n,n.$ti.i("aB.E"))
-return new A.th(r.a.a*0.7,250,p,new A.cd(new A.ap(B.j,t.rc),o,o,new A.ap(8,t.YI),new A.ap(B.a2,t.WY),o,o,o,o,new A.ap(new A.bU(q,B.o),t._o),o,o,o),s,b,n,o,t.Cl)},
+return new A.th(r.a.a*0.65,250,p,new A.cd(new A.ap(B.j,t.rc),o,o,new A.ap(8,t.YI),new A.ap(B.a2,t.WY),o,o,o,o,new A.ap(new A.bU(q,B.o),t._o),o,o,o),s,b,n,o,t.Cl)},
 ak9(){var s=null,r=t.N,q=t.z,p=A.b([A.aa(["icon",B.Hn,"title","Base Metabolic Rate","text",B.h.k(this.y),"bgColor",B.DU,"titleColor",B.aG,"borderColor",B.EK],r,q),A.aa(["icon",B.Hk,"title","Maintenance Calories","text",B.h.k(this.z),"bgColor",B.nI,"titleColor",B.b6,"borderColor",B.nd],r,q),A.aa(["icon",B.Hg,"title","Target Calories","text",B.h.k(this.Q),"bgColor",B.nh,"titleColor",B.cJ,"borderColor",B.nC],r,q)],t.H7)
 q=A.b([A.a6B(B.a2,8,A.c5(B.H8,B.cJ,s,s),0,s,A.a2("Your Results",s,s,s,A.an(s,s,s,s,s,s,s,s,s,s,s,24,s,s,B.A,s,s,!0,s,s,s,s,s,s,s,s),s,s),s),new A.O(s,30,s,s)],t.p)
 B.b.U(q,new A.ae(p,new A.aiY(),t.aK))
