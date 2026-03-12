@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/screens/about.dart';
 import 'package:workout_app/screens/ai_bot_screen.dart';
 import 'package:workout_app/screens/bmi_calculator.dart';
 import 'package:workout_app/screens/calorie_calculator.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/bmi': (context) => BmiCalculatorScreen(),
         '/calorie': (context) => CalorieCalculatorScreen(),
         '/aiCoach': (context) => AiBotScreen(),
+        '/about': (context) => About(),
       },
     );
   }
@@ -69,8 +71,8 @@ class _MainNavigationState extends State<MainNavigation> {
       case 'Workout Plans':
         setState(() => _selectedIndex = 2);
         break;
-      case 'Profile':
-        setState(() => _selectedIndex = 3);
+      case 'About':
+        Navigator.pushNamed(context, '/about');
         break;
       case 'BMI Calculator':
         Navigator.pushNamed(context, '/bmi');

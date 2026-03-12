@@ -12,7 +12,7 @@ class CustomDrawer extends StatelessWidget {
     {"title": "BMI Calculator", "icon": Icons.calculate},
     {"title": "Calorie Calculator", "icon": Icons.restaurant},
     {"title": "AI Coach", "icon": Icons.smart_toy},
-    {"title": "Profile", "icon": Icons.person},
+    {"title": "About", "icon": Icons.person},
   ];
 
   final int _selectedIndex = 0;
