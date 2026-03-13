@@ -125,9 +125,9 @@ class _MainNavigationState extends State<MainNavigation> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _navItem(Icons.home, 'Home', 0),
-            _navItem(Icons.layers_outlined, 'Exercises', 1),
-            _navItem(Icons.qr_code_scanner, 'My Workouts', 2),
-            _navItem(Icons.credit_card_outlined, 'Profile', 3),
+            _navItem(Icons.fitness_center, 'Exercises', 1),
+            _navItem(Icons.event_note, 'My Workouts', 2),
+            _navItem(Icons.person, 'Profile', 3),
           ],
         ),
       ),
