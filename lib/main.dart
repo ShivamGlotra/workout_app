@@ -119,41 +119,75 @@ class _MainNavigationState extends State<MainNavigation> {
           ],
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        height: 70,
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: (index) {
-          setState(() => _selectedIndex = index);
-        },
-        backgroundColor: Colors.black,
-        indicatorColor: Colors.white60,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home, color: Colors.white),
-            selectedIcon: Icon(Icons.home, color: Colors.black),
-            label: "Home",
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.fitness_center, color: Colors.white),
-            selectedIcon: Icon(Icons.fitness_center, color: Colors.black),
-            label: "Excercises",
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.event_note, color: Colors.white),
-            selectedIcon: Icon(Icons.event_note, color: Colors.black),
-            label: "My Workouts",
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person, color: Colors.white),
-            selectedIcon: Icon(Icons.person, color: Colors.black),
-            label: "Profile",
-          ),
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: Color(0xFF151521)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _navItem(Icons.home, 'Home', 0),
+            _navItem(Icons.layers_outlined, 'Exercises', 1),
+            _navItem(Icons.qr_code_scanner, 'My Workouts', 2),
+            _navItem(Icons.credit_card_outlined, 'Profile', 3),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Builder method
+  Widget _navItem(IconData icon, String label, int index) {
+    final isSelected = _selectedIndex == index;
+    return GestureDetector(
+      onTap: () => setState(() => _selectedIndex = index),
+      child: Container(
+        color: Colors.transparent,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              height: 3,
+              width: isSelected ? _getTextWidth(label, context) : 0,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            SizedBox(height: 10),
+            Icon(
+              icon,
+              color: isSelected ? Colors.white : Colors.grey.shade500,
+              size: 24,
+            ),
+            SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                color: isSelected ? Colors.white : Colors.grey.shade500,
+                fontSize: 12,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+              ),
+            ),
+            SizedBox(height: 12),
+          ],
+        ),
       ),
     );
   }
 
   Widget getPageHeadingText(PageHeading pageHeading) {
     return Text(pageHeading.value, style: const TextStyle());
+  }
+
+  double _getTextWidth(String label, BuildContext context) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(
+        text: label,
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+      ),
+      maxLines: 1,
+      textDirection: TextDirection.ltr,
+    )..layout();
+    return textPainter.size.width;
   }
 }
