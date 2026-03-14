@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       // initialRoute: '/',
       home: const MainNavigation(),
       routes: {
-        '/excercisePlans': (context) => WeeklyExercisePlans(),
+        '/exercisePlans': (context) => WeeklyExercisePlans(),
         '/bmi': (context) => BmiCalculatorScreen(),
         '/calorie': (context) => CalorieCalculatorScreen(),
         '/aiCoach': (context) => AiBotScreen(),
@@ -68,7 +68,7 @@ class _MainNavigationState extends State<MainNavigation> {
         setState(() => _selectedIndex = 0);
         break;
       case 'Exercise Plans':
-        Navigator.pushNamed(context, '/excercisePlans');
+        Navigator.pushNamed(context, '/exercisePlans');
         break;
       case 'Workout Plans':
         setState(() => _selectedIndex = 2);
@@ -94,7 +94,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
     final List<Widget> screens = [
       HomePage(reset: resetHome), // "Home"
-      ExcerciseLibraryScreen(), // "Excercises"
+      ExerciseLibraryScreen(), // "Exercises"
       CustomWorkoutScreen(),
       ProfilePage(),
     ];
@@ -148,7 +148,7 @@ class _MainNavigationState extends State<MainNavigation> {
           children: [
             AnimatedContainer(
               duration: Duration(milliseconds: 300),
-              height: 3,
+              height: 2,
               width: isSelected ? _getTextWidth(label, context) : 0,
               decoration: BoxDecoration(
                 color: Colors.white,

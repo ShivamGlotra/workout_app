@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ExcerciseDetailsScreen extends StatefulWidget {
+class ExerciseDetailsScreen extends StatefulWidget {
   final String exerciseName;
-  const ExcerciseDetailsScreen({super.key, required this.exerciseName});
+  const ExerciseDetailsScreen({super.key, required this.exerciseName});
 
   @override
-  State<ExcerciseDetailsScreen> createState() => _ExcerciseDetailsScreenState();
+  State<ExerciseDetailsScreen> createState() => _ExerciseDetailsScreenState();
 }
 
-class _ExcerciseDetailsScreenState extends State<ExcerciseDetailsScreen> {
+class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

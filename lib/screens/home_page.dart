@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                 _activePageKey != null &&
                     pageBuilders.containsKey(_activePageKey)
                 ? pageBuilders[_activePageKey]!()
-                : buildExcerciseGrid(context),
+                : buildExerciseGrid(context),
           ),
         ),
       ],
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildExcerciseGrid(BuildContext context) {
+  Widget buildExerciseGrid(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [

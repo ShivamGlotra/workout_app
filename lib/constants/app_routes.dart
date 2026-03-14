@@ -1,6 +1,6 @@
 class AppRoutes {
   static const home = "";
-  static const excercise = "Excercise Library";
+  static const exercise = "Exercise Library";
   static const myWorkouts = "Workout Plans";
   static const chest = "CHEST";
   static const back = "BACK";

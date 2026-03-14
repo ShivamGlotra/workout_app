@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:workout_app/constants/excercises.dart';
+import 'package:workout_app/constants/exercises.dart';
 
-class ExcerciseFilter extends StatelessWidget {
-  const ExcerciseFilter({super.key});
+class ExerciseFilter extends StatelessWidget {
+  const ExerciseFilter({super.key});
 
   @override
   Widget build(BuildContext context) {

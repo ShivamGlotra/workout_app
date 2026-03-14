@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:workout_app/constants/excercises.dart';
-import 'package:workout_app/widgets/excercise_widget.dart';
+import 'package:workout_app/constants/exercises.dart';
+import 'package:workout_app/widgets/exercise_widget.dart';
 
-class ExcerciseLibraryScreen extends StatefulWidget {
-  const ExcerciseLibraryScreen({super.key});
+class ExerciseLibraryScreen extends StatefulWidget {
+  const ExerciseLibraryScreen({super.key});
 
   @override
-  State<ExcerciseLibraryScreen> createState() => _ExcerciseLibraryScreenState();
+  State<ExerciseLibraryScreen> createState() => _ExerciseLibraryScreenState();
 }
 
-class _ExcerciseLibraryScreenState extends State<ExcerciseLibraryScreen> {
+class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
   bool showFilters = false;
   String searchQuery = "";
 
@@ -274,7 +274,7 @@ class _ExcerciseLibraryScreenState extends State<ExcerciseLibraryScreen> {
                       ),
                     ),
                   )
-                : ExcerciseWidget(data: filteredExercises),
+                : ExerciseWidget(data: filteredExercises),
           ),
           const SizedBox(height: 24),
         ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:workout_app/constants/excercises.dart';
-import 'package:workout_app/widgets/excercise_filter.dart';
-import 'package:workout_app/widgets/excercise_widget.dart';
+import 'package:workout_app/constants/exercises.dart';
+import 'package:workout_app/widgets/exercise_filter.dart';
+import 'package:workout_app/widgets/exercise_widget.dart';
 
 class CardioPage extends StatefulWidget {
   const CardioPage({super.key});
@@ -15,8 +15,8 @@ class _CardioPageState extends State<CardioPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ExcerciseFilter(),
-        ExcerciseWidget(data: chestExercises),
+        ExerciseFilter(),
+        ExerciseWidget(data: chestExercises),
       ],
     );
   }

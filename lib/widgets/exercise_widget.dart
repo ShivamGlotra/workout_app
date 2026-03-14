@@ -13,10 +13,10 @@ class ListItemData {
   });
 }
 
-class ExcerciseWidget extends StatelessWidget {
+class ExerciseWidget extends StatelessWidget {
   final List<ListItemData> data;
 
-  const ExcerciseWidget({super.key, required this.data});
+  const ExerciseWidget({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class ExcerciseWidget extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      ExcerciseDetailsScreen(exerciseName: data[index].title),
+                      ExerciseDetailsScreen(exerciseName: data[index].title),
                 ),
               );
             },
