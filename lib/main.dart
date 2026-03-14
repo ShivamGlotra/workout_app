@@ -4,8 +4,9 @@ import 'package:workout_app/screens/ai_bot_screen.dart';
 import 'package:workout_app/screens/bmi_calculator.dart';
 import 'package:workout_app/screens/calorie_calculator.dart';
 import 'package:workout_app/screens/custom_workout.dart';
-import 'package:workout_app/screens/excercise_library_screen.dart';
+import 'package:workout_app/screens/exercise_library_screen.dart';
 import 'package:workout_app/screens/profile_page.dart';
+import 'package:workout_app/screens/weekly_exercise_plans.dart';
 import 'package:workout_app/widgets/drawer.dart';
 import 'package:workout_app/screens/home_page.dart';
 import 'constants/page_heading.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       // initialRoute: '/',
       home: const MainNavigation(),
       routes: {
+        '/excercisePlans': (context) => WeeklyExercisePlans(),
         '/bmi': (context) => BmiCalculatorScreen(),
         '/calorie': (context) => CalorieCalculatorScreen(),
         '/aiCoach': (context) => AiBotScreen(),
@@ -66,7 +68,7 @@ class _MainNavigationState extends State<MainNavigation> {
         setState(() => _selectedIndex = 0);
         break;
       case 'Exercise Plans':
-        setState(() => _selectedIndex = 1);
+        Navigator.pushNamed(context, '/excercisePlans');
         break;
       case 'Workout Plans':
         setState(() => _selectedIndex = 2);

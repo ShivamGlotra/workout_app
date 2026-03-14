@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workout_app/screens/excercise_details_screen.dart';
+import 'package:workout_app/screens/exercise_details_screen.dart';
 
 class ListItemData {
   final String title;
