@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
       home: const MainNavigation(),
       routes: {
         '/exercisePlans': (context) => WeeklyExercisePlans(),
+        '/muscleGroupPlans': (context) => WeeklyExercisePlans(),
         '/bmi': (context) => BmiCalculatorScreen(),
         '/calorie': (context) => CalorieCalculatorScreen(),
         '/aiCoach': (context) => AiBotScreen(),
@@ -70,8 +71,8 @@ class _MainNavigationState extends State<MainNavigation> {
       case 'Exercise Plans':
         Navigator.pushNamed(context, '/exercisePlans');
         break;
-      case 'Workout Plans':
-        setState(() => _selectedIndex = 2);
+      case 'Muscle Group Plans':
+        Navigator.pushNamed(context, '/muscleGroupPlans');
         break;
       case 'About':
         Navigator.pushNamed(context, '/about');
