@@ -37,53 +37,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * .84,
-            height: MediaQuery.of(context).size.width * .05,
-            // child: TextField(
-            //   decoration: InputDecoration(
-            //     hintText: "Search exercises",
-            //     prefixIcon: const Icon(Icons.search),
-            //     filled: true,
-            //     fillColor: MaterialStateColor.resolveWith((
-            //       Set<MaterialState> states,
-            //     ) {
-            //       if (states.contains(MaterialState.focused)) {
-            //         return Colors.white; // Color when focused
-            //       }
-            //       return const Color.fromARGB(
-            //         255,
-            //         233,
-            //         233,
-            //         233,
-            //       ); // Color when NOT focused
-            //     }),
-            //     // enabledBorder: OutlineInputBorder(
-            //     //   borderRadius: BorderRadius.circular(12),
-            //     //   borderSide: const BorderSide(
-            //     //     color: Colors.black26,
-            //     //     width: 2,
-            //     //   ),
-            //     // ),
-            //     focusedBorder: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(12),
-            //       borderSide: const BorderSide(
-            //         color: Colors.black38, // <-- border color when active
-            //         width: 2,
-            //       ),
-            //     ),
-            //     contentPadding: const EdgeInsets.symmetric(vertical: 0),
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(12),
-            //       borderSide: BorderSide(color: Colors.grey.shade300),
-            //     ),
-            //   ),
-            //   onChanged: (query) {},
-            // ),
-          ),
-        ),
+        // Padding(padding: const EdgeInsets.symmetric(horizontal: 16)),
         Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -143,7 +97,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildExerciseGrid(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         SizedBox(height: 20),
         ...List.generate((exerciseTiles.length / 2).ceil(), (rowIndex) {
@@ -167,6 +121,57 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         }),
+        SizedBox(height: 10),
+        ElevatedButton.icon(
+          onPressed: () => (
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text("Create New Plan"),
+                content: Text("New workout plan creation coming soon!"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text("Close"),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          icon: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.play_arrow,
+              color: Color.fromARGB(255, 10, 135, 238),
+              size: 16,
+            ),
+          ),
+          style: ButtonStyle(
+            elevation: WidgetStateProperty.all(2),
+            shadowColor: WidgetStateProperty.all(Colors.blue),
+            backgroundColor: WidgetStateProperty.all(
+              const Color.fromARGB(255, 10, 135, 238),
+            ),
+            foregroundColor: WidgetStateProperty.all(Colors.white),
+            padding: WidgetStateProperty.all(
+              EdgeInsets.symmetric(
+                horizontal: MediaQuery.widthOf(context) * .2,
+                vertical: 12,
+              ),
+            ),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+          ),
+          label: Text(
+            'Start Workout',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(height: 10),
       ],
     );
   }
