@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/routing/page_routes.dart';
+import 'package:workout_app/screens/start_workout_flow/choose_new_workout.dart';
 
 class HomePage extends StatefulWidget {
   final bool reset;
@@ -123,20 +124,9 @@ class _HomePageState extends State<HomePage> {
         }),
         SizedBox(height: 10),
         ElevatedButton.icon(
-          onPressed: () => (
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text("Create New Plan"),
-                content: Text("New workout plan creation coming soon!"),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text("Close"),
-                  ),
-                ],
-              ),
-            ),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ChooseNewWorkout()),
           ),
           icon: Container(
             decoration: BoxDecoration(
