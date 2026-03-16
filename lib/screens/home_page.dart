@@ -133,18 +133,12 @@ class _HomePageState extends State<HomePage> {
               color: Colors.white,
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              Icons.play_arrow,
-              color: Color.fromARGB(255, 10, 135, 238),
-              size: 16,
-            ),
+            child: Icon(Icons.play_arrow, color: Color(0xFF137FEC), size: 16),
           ),
           style: ButtonStyle(
             elevation: WidgetStateProperty.all(2),
             shadowColor: WidgetStateProperty.all(Colors.blue),
-            backgroundColor: WidgetStateProperty.all(
-              const Color.fromARGB(255, 10, 135, 238),
-            ),
+            backgroundColor: WidgetStateProperty.all(Color(0xFF137FEC)),
             foregroundColor: WidgetStateProperty.all(Colors.white),
             padding: WidgetStateProperty.all(
               EdgeInsets.symmetric(
