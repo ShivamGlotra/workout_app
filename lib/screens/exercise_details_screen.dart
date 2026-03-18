@@ -154,13 +154,19 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
                     height: MediaQuery.heightOf(context) * .07,
                     child: ElevatedButton.icon(
                       onPressed: () => (),
-                      icon: const Icon(
-                        Icons.timer_outlined,
-                        color: Colors.white,
-                        size: 28,
+                      icon: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.play_arrow,
+                          color: Color(0xFF000000), // High-vis neon lime
+                          size: 16,
+                        ),
                       ),
                       label: const Text(
-                        "START WORKOUT",
+                        "START EXERCISE",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
