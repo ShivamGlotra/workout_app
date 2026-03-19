@@ -6,13 +6,13 @@ class CustomDrawer extends StatelessWidget {
   CustomDrawer({super.key, required this.onSelect});
 
   final List<Map<String, dynamic>> drawerButtons = [
-    {"title": "Home", "icon": Icons.home},
-    {"title": "Exercise Plans", "icon": Icons.assignment},
-    {"title": "Muscle Group Plans", "icon": Icons.sports_gymnastics},
-    {"title": "BMI Calculator", "icon": Icons.calculate},
-    {"title": "Calorie Calculator", "icon": Icons.restaurant},
-    {"title": "AI Coach", "icon": Icons.smart_toy},
-    {"title": "About", "icon": Icons.person},
+    {"title": "Home", "icon": Icons.home_outlined},
+    {"title": "Exercise Plans", "icon": Icons.assignment_outlined},
+    {"title": "Muscle Group Plans", "icon": Icons.sports_gymnastics_outlined},
+    {"title": "BMI Calculator", "icon": Icons.calculate_outlined},
+    {"title": "Calorie Calculator", "icon": Icons.restaurant_outlined},
+    {"title": "AI Coach", "icon": Icons.smart_toy_outlined},
+    {"title": "About", "icon": Icons.person_outlined},
   ];
 
   final int _selectedIndex = 0;
