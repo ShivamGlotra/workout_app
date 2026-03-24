@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/screens/start_workout_flow/planned_exercise_list.dart';
-import 'package:workout_app/widgets/information_widget.dart';
+import 'package:workout_app/widgets/info_widget_landing_screen.dart';
 
 class ChooseNewWorkout extends StatefulWidget {
   const ChooseNewWorkout({super.key});
