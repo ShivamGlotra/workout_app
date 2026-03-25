@@ -122,16 +122,18 @@ class _MainNavigationState extends State<MainNavigation> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Color(0xFF151521)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _navItem(Icons.home, 'Home', 0),
-            _navItem(Icons.fitness_center, 'Exercises', 1),
-            _navItem(Icons.event_note, 'My Workouts', 2),
-            _navItem(Icons.person, 'Profile', 3),
-          ],
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(color: Color(0xFF151521)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _navItem(Icons.home, 'Home', 0),
+              _navItem(Icons.fitness_center, 'Exercises', 1),
+              _navItem(Icons.event_note, 'My Workouts', 2),
+              _navItem(Icons.person, 'Profile', 3),
+            ],
+          ),
         ),
       ),
     );
