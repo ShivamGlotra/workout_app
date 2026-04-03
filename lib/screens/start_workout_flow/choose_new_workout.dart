@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/screens/start_workout_flow/planned_exercise_list.dart';
 import 'package:workout_app/widgets/info_widget_landing_screen.dart';
+import 'package:workout_app/widgets/error_message.dart';
 
 class ChooseNewWorkout extends StatefulWidget {
   const ChooseNewWorkout({super.key});
@@ -10,6 +11,7 @@ class ChooseNewWorkout extends StatefulWidget {
 }
 
 class _ChooseNewWorkoutState extends State<ChooseNewWorkout> {
+  bool _noFilterSelected = false;
   final List<Map<String, dynamic>> exercises = [
     {"title": "CHEST", "icon": Icons.fitness_center},
     {"title": "BACK", "icon": Icons.fitness_center},
@@ -156,14 +158,18 @@ class _ChooseNewWorkoutState extends State<ChooseNewWorkout> {
                           ),
                         ),
                         onPressed: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PlannedExerciseList(
-                                exerciseFilters: exerciseFilters,
-                              ),
-                            ),
-                          ),
+                          exerciseFilters.isNotEmpty
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PlannedExerciseList(
+                                      exerciseFilters: exerciseFilters.toList(),
+                                    ),
+                                  ),
+                                )
+                              : setState(() {
+                                  _noFilterSelected = true;
+                                }),
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -181,6 +187,10 @@ class _ChooseNewWorkoutState extends State<ChooseNewWorkout> {
                         ),
                       ),
                     ),
+                    if (_noFilterSelected) ...[
+                      SizedBox(height: 15),
+                      errorMessage("Please select at least one muscle group."),
+                    ],
                     SizedBox(
                       height: MediaQuery.of(context).padding.bottom + 30,
                     ),
@@ -205,11 +215,12 @@ class _ChooseNewWorkoutState extends State<ChooseNewWorkout> {
   }
 
   void _selectAll() {
-    setState(
-      () => exerciseFilters.addAll(
+    setState(() {
+      exerciseFilters.addAll(
         exercises.map((exercise) => exercise['title'].toString()),
-      ),
-    );
+      );
+      _noFilterSelected = false;
+    });
   }
 
   void _clearAll() {
@@ -223,7 +234,10 @@ class _ChooseNewWorkoutState extends State<ChooseNewWorkout> {
   ) {
     // bool isSelected = _currentExerciseIndex == index;
     return GestureDetector(
-      onTap: () => _toggleFilter(data['title'].toString()),
+      onTap: () {
+        _toggleFilter(data['title'].toString());
+        _noFilterSelected = false;
+      },
       child: Container(
         width: 180,
         height: 140,
