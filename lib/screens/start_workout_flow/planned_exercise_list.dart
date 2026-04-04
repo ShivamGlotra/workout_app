@@ -155,9 +155,9 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
               ),
               widget.exerciseFilters
                   .map(
-                    (excerciseName) => exerciseTitle(
-                      excerciseName,
-                      colorList[widget.exerciseFilters.indexOf(excerciseName)],
+                    (muscleName) => exerciseTitle(
+                      muscleName,
+                      colorList[widget.exerciseFilters.indexOf(muscleName)],
                     ),
                   )
                   .toList(),
@@ -278,7 +278,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
     );
   }
 
-  Widget exerciseTitle(String excerciseName, Color containerColorName) {
+  Widget exerciseTitle(String muscleName, Color containerColorName) {
     return Column(
       spacing: 10,
       children: [
@@ -286,23 +286,36 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              spacing: 10,
               children: [
                 Container(
-                  height: 20,
+                  height: 23,
                   width: 4,
                   decoration: BoxDecoration(
                     color: containerColorName,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
-                Text(
-                  excerciseName,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1.4,
-                    color: Color(0xFF1a2340),
+                Container(
+                  width: 150,
+                  padding: const EdgeInsets.only(left: 8, bottom: 2, top: 2),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        containerColorName.withOpacity(0.3),
+                        Colors.transparent,
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                  ),
+                  child: Text(
+                    muscleName,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.4,
+                      color: Color(0xFF1a2340),
+                    ),
                   ),
                 ),
               ],
