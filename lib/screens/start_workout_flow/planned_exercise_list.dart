@@ -1,7 +1,7 @@
 // This page is going to display calories for the workout. Make sure it is same for the exercise detail screen
 import 'package:flutter/material.dart';
 import 'package:workout_app/screens/exercise_details_screen.dart';
-import 'package:workout_app/screens/start_workout_flow/choose_new_workout.dart';
+import 'package:workout_app/screens/start_workout_flow/current_exercise_screen.dart';
 import 'package:workout_app/widgets/info_widget_planned_exc_screen.dart';
 
 class PlannedExerciseList extends StatefulWidget {
@@ -29,7 +29,25 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
     Colors.purple[700]!,
     Colors.brown[700]!,
   ];
+  final List<String> setsAndReps = [
+    "3 sets x 8 reps",
+    "4 sets x 10 reps",
+    "4 sets x 12 reps",
+  ];
   int selectedTabIndex = 0;
+
+  // Sample list of exercises that will be fetched from the backend
+  final List<String> exerciseList = [
+    'Plank',
+    'Bench Press',
+    'Bicep Curl',
+    'Tricep Dip',
+    'Squat',
+    'Deadlift',
+    'Pull-Up',
+    'Shoulder Press',
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -104,7 +122,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
               exerciseWidget(
                 "Flat Bench Press",
                 "assets/images/bench_press.jpg",
-                "sets x reps",
+                setsAndReps[0],
                 "120 kcal",
                 Icon(Icons.ice_skating),
                 Icon(Icons.ice_skating),
@@ -115,6 +133,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                 "Begin Session",
                 "GO BACK",
                 context,
+                exerciseList,
               ),
             ),
             exerciseContainer(
@@ -134,7 +153,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
               exerciseWidget(
                 "Flat Bench Press",
                 "assets/images/bench_press.jpg",
-                "sets x reps",
+                setsAndReps[1],
                 "120 kcal",
                 Icon(Icons.ice_skating),
                 Icon(Icons.ice_skating),
@@ -145,6 +164,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                 "Begin Session",
                 "GO BACK",
                 context,
+                exerciseList,
               ),
             ),
             exerciseContainer(
@@ -164,7 +184,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
               exerciseWidget(
                 "Flat Bench Press",
                 "assets/images/bench_press.jpg",
-                "sets x reps",
+                setsAndReps[2],
                 "120 kcal",
                 Icon(Icons.ice_skating),
                 Icon(Icons.ice_skating),
@@ -175,6 +195,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                 "Begin Session",
                 "GO BACK",
                 context,
+                exerciseList,
               ),
             ),
           ],
@@ -214,7 +235,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                     ],
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 40),
                 buttonContainer,
                 SizedBox(height: MediaQuery.of(context).padding.bottom),
               ],
@@ -301,7 +322,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        containerColorName.withOpacity(0.3),
+                        containerColorName.withOpacity(0.1),
                         Colors.transparent,
                       ],
                       begin: Alignment.centerLeft,
@@ -445,6 +466,7 @@ Widget navigatingButtons(
   String proceedingButtonName,
   String backButtonName,
   BuildContext context,
+  List<String> exerciseList,
 ) {
   return Column(
     children: [
@@ -466,10 +488,17 @@ Widget navigatingButtons(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             ),
           ),
-          onPressed: () => {},
+          onPressed: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    CurrentExerciseScreen(exerciseList: exerciseList),
+              ),
+            ),
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            spacing: 10,
             children: [
               Icon(Icons.arrow_right, size: 30),
               Text(
