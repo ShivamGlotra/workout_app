@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_app/screens/start_workout_flow/session_summary_screen.dart';
 
 class CurrentExerciseScreen extends StatefulWidget {
   final List<String> exerciseList;
@@ -10,9 +12,52 @@ class CurrentExerciseScreen extends StatefulWidget {
 }
 
 class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
+  Timer? _timer;
+  int _seconds = 0;
+  bool _isRunning = false;
   int exerciseListIndex = 0;
   bool markCompleted = false;
   bool imageClicked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _isRunning = true;
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      setState(() {
+        _seconds++;
+      });
+    });
+  }
+
+  void _pauseTimer() {
+    _timer?.cancel();
+    setState(() => _isRunning = false);
+  }
+
+  void _stopTimer() {
+    _timer?.cancel();
+    setState(() {
+      _isRunning = false;
+      _seconds = 0;
+    });
+  }
+
+  String _formatTimer(int totalSeconds) {
+    final minutes = totalSeconds ~/ 60;
+    final seconds = totalSeconds % 60;
+    return "${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +66,15 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
         actionsPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         titleSpacing: 0,
         leading: Icon(Icons.timer, color: Colors.blue),
-        title: Text("24:15"),
+        title: Text(_formatTimer(_seconds)),
         actions: [
-          iconContainer(Icons.pause, Colors.grey),
+          iconContainer(
+            _isRunning ? Icons.pause : Icons.play_arrow,
+            _isRunning ? Colors.grey : Colors.black54,
+            _isRunning ? _pauseTimer : _startTimer,
+          ),
           SizedBox(width: 10),
-          iconContainer(Icons.stop, Colors.red),
+          iconContainer(Icons.stop, Colors.red, _stopTimer),
         ],
         bottom: PreferredSize(
           preferredSize: Size.zero,
@@ -57,7 +106,11 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
     );
   }
 
-  Widget iconContainer(IconData iconName, Color colorName) {
+  Widget iconContainer(
+    IconData iconName,
+    Color colorName,
+    void Function()? onPressed,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: colorName.withAlpha(30),
@@ -68,7 +121,7 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
         visualDensity: VisualDensity.compact,
         icon: Icon(iconName),
         color: colorName,
-        onPressed: () {},
+        onPressed: onPressed,
       ),
     );
   }
@@ -215,9 +268,10 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
             children: [
               currentSetRepContainer(
                 "Current Set",
-                ("$totalSet / $totalSet").toString(),
+                totalSet.toString(),
+                " / $totalSet",
               ),
-              currentSetRepContainer("Reps", ("$reps REPS").toString()),
+              currentSetRepContainer("Reps", ("$reps").toString(), " REPS"),
             ],
           ),
         ],
@@ -228,31 +282,32 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
   Widget buttonsForTheScreen() {
     return Column(
       children: [
-        ElevatedButton.icon(
-          style: ButtonStyle(
-            elevation: WidgetStateProperty.all(2),
-            shadowColor: WidgetStateProperty.all(Colors.black87),
-            backgroundColor: WidgetStateProperty.all(Colors.black54),
-            foregroundColor: WidgetStateProperty.all(Colors.white),
-            padding: WidgetStateProperty.all(
-              EdgeInsets.symmetric(
-                horizontal: MediaQuery.widthOf(context) * .30,
-                vertical: 15,
+        SizedBox(
+          height: 55,
+          width: MediaQuery.widthOf(context) * .87,
+          child: ElevatedButton.icon(
+            style: ButtonStyle(
+              elevation: WidgetStateProperty.all(2),
+              shadowColor: WidgetStateProperty.all(Colors.black87),
+              backgroundColor: WidgetStateProperty.all(Colors.black54),
+              foregroundColor: WidgetStateProperty.all(Colors.white),
+              shape: WidgetStateProperty.all(
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
-            shape: WidgetStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-          ),
-          onPressed: () => (),
-          icon: Icon(Icons.arrow_forward),
-          iconAlignment: IconAlignment.end,
-          label: Text(
-            "Next Set".toUpperCase(),
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+            onPressed: () => (Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SessionSummaryScreen()),
+            )),
+            icon: Icon(Icons.arrow_forward),
+            iconAlignment: IconAlignment.end,
+            label: Text(
+              "Next Set".toUpperCase(),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
@@ -302,13 +357,54 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
             ),
           ],
         ),
+        SizedBox(height: 10),
+        SizedBox(
+          height: 60,
+          width: MediaQuery.widthOf(context) * .88,
+          child: Card(
+            elevation: 1,
+            color: Colors.red[50],
+            child: TextButton(
+              child: Text(
+                "End Workout",
+                style: TextStyle(
+                  color: Colors.red[400],
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () => (),
+            ),
+          ),
+        ),
+        TextButton.icon(
+          style: ButtonStyle(
+            shadowColor: WidgetStateProperty.all(Colors.transparent),
+            foregroundColor: WidgetStateProperty.all(Colors.black54),
+            padding: WidgetStateProperty.all(
+              EdgeInsets.only(top: 10, right: 10),
+            ),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+          ),
+          onPressed: () => setState(() {
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          }),
+          label: Text("Return to Home"),
+          icon: Icon(CupertinoIcons.home),
+        ),
       ],
     );
   }
 
-  Widget currentSetRepContainer(String title, String bodyData) {
+  Widget currentSetRepContainer(
+    String title,
+    String currentData, // current set and REPS
+    String leadingData, // total set and REPS
+  ) {
     return Container(
-      height: MediaQuery.heightOf(context) * .10,
+      height: MediaQuery.heightOf(context) * .15,
       width: MediaQuery.widthOf(context) * .42,
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       decoration: BoxDecoration(
@@ -327,12 +423,26 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
             ),
           ),
           SizedBox(height: 5),
-          Text(
-            bodyData,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[600],
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: currentData,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                TextSpan(
+                  text: leadingData,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
             ),
           ),
         ],
