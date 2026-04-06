@@ -18,6 +18,7 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
   int exerciseListIndex = 0;
   bool markCompleted = false;
   bool imageClicked = false;
+  int totalTime = 0;
 
   @override
   void initState() {
@@ -35,11 +36,13 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
   }
 
   void _pauseTimer() {
+    totalTime += _seconds;
     _timer?.cancel();
     setState(() => _isRunning = false);
   }
 
   void _stopTimer() {
+    totalTime += _seconds;
     _timer?.cancel();
     setState(() {
       _isRunning = false;
@@ -295,10 +298,18 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
-            onPressed: () => (Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SessionSummaryScreen()),
-            )),
+            onPressed: () => {
+              setState(() => _stopTimer()),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SessionSummaryScreen(
+                    completedExercises: widget.exerciseList,
+                    workoutTime: totalTime,
+                  ),
+                ),
+              ),
+            },
             icon: Icon(Icons.arrow_forward),
             iconAlignment: IconAlignment.end,
             label: Text(
@@ -373,7 +384,18 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              onPressed: () => (),
+              onPressed: () => {
+                setState(() => _stopTimer()),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SessionSummaryScreen(
+                      completedExercises: widget.exerciseList,
+                      workoutTime: totalTime,
+                    ),
+                  ),
+                ),
+              },
             ),
           ),
         ),

@@ -1,4 +1,5 @@
 class AppRoutes {
+  static const chooseNewWorkout = "/chooseNewWorkout";
   static const home = "";
   static const exercise = "Exercise Library";
   static const myWorkouts = "Workout Plans";
