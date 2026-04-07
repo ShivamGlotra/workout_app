@@ -134,6 +134,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                 "GO BACK",
                 context,
                 exerciseList,
+                selectedTabIndex,
               ),
             ),
             exerciseContainer(
@@ -165,6 +166,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                 "GO BACK",
                 context,
                 exerciseList,
+                selectedTabIndex,
               ),
             ),
             exerciseContainer(
@@ -196,6 +198,7 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                 "GO BACK",
                 context,
                 exerciseList,
+                selectedTabIndex,
               ),
             ),
           ],
@@ -467,6 +470,7 @@ Widget navigatingButtons(
   String backButtonName,
   BuildContext context,
   List<String> exerciseList,
+  int selectedLevelIndex,
 ) {
   return Column(
     children: [
@@ -492,8 +496,10 @@ Widget navigatingButtons(
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    CurrentExerciseScreen(exerciseList: exerciseList),
+                builder: (context) => CurrentExerciseScreen(
+                  exerciseList: exerciseList,
+                  userLevel: selectedLevelIndex,
+                ),
               ),
             ),
           },

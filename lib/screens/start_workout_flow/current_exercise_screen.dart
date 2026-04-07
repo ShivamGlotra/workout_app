@@ -5,7 +5,12 @@ import 'package:workout_app/screens/start_workout_flow/session_summary_screen.da
 
 class CurrentExerciseScreen extends StatefulWidget {
   final List<String> exerciseList;
-  const CurrentExerciseScreen({required this.exerciseList, super.key});
+  final int userLevel;
+  const CurrentExerciseScreen({
+    required this.exerciseList,
+    required this.userLevel,
+    super.key,
+  });
 
   @override
   State<CurrentExerciseScreen> createState() => _CurrentExerciseScreenState();
@@ -19,6 +24,8 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
   bool markCompleted = false;
   bool imageClicked = false;
   int totalTime = 0;
+  int currentSetIndex = 0;
+  int totalSets = 0;
 
   @override
   void initState() {
@@ -62,6 +69,32 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
     super.dispose();
   }
 
+  int getTotalSetsForLevel(int level) {
+    switch (level) {
+      case 0:
+        return 3;
+      case 1:
+        return 4;
+      case 2:
+        return 5;
+      default:
+        return 4;
+    }
+  }
+
+  int getTotalReps(int level) {
+    switch (level) {
+      case 0:
+        return 8;
+      case 1:
+        return 10;
+      case 2:
+        return 12;
+      default:
+        return 8;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,12 +125,23 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
               spacing: 10,
               children: [
                 progressBar(widget.exerciseList.length, 7),
+                widget.exerciseList.length > 1
+                    ? Text(
+                        "Up Next: ${widget.exerciseList[1]}",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[600],
+                        ),
+                      )
+                    : SizedBox.shrink(),
                 currentExerciseContainer(
                   widget.exerciseList[2],
                   "Chest",
                   "assets/images/incline_press.jpg",
-                  4,
-                  12,
+                  1,
+                  getTotalSetsForLevel(widget.userLevel),
+                  getTotalReps(widget.userLevel),
                 ),
                 SizedBox(height: 20),
                 buttonsForTheScreen(),
@@ -169,6 +213,7 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
     String exerciseName,
     String muscleName,
     String imagePath,
+    int currentSet,
     int totalSet,
     int reps,
   ) {
@@ -271,7 +316,7 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
             children: [
               currentSetRepContainer(
                 "Current Set",
-                totalSet.toString(),
+                currentSet.toString(),
                 " / $totalSet",
               ),
               currentSetRepContainer("Reps", ("$reps").toString(), " REPS"),
@@ -313,7 +358,9 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
             icon: Icon(Icons.arrow_forward),
             iconAlignment: IconAlignment.end,
             label: Text(
-              "Next Set".toUpperCase(),
+              currentSetIndex < 4
+                  ? "Next Set".toUpperCase()
+                  : "Next Exercise".toUpperCase(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
@@ -453,7 +500,7 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: Colors.grey[600],
+                    color: Colors.black54,
                   ),
                 ),
                 TextSpan(
