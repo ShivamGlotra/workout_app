@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/constants/exercises.dart';
 import 'package:workout_app/widgets/exercise_widget.dart';
+import 'package:workout_app/widgets/gradient_title.dart';
 
 class ExerciseLibraryScreen extends StatefulWidget {
   const ExerciseLibraryScreen({super.key});
@@ -64,7 +65,7 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
 
   final Map<String, Color> muscleColors = {
     "Chest": Colors.red,
-    "Legs": Colors.blue,
+    "Legs": Colors.indigoAccent,
     "Back": Colors.purple,
     "Shoulders": Colors.orange,
     "Arms": Colors.green,
@@ -176,7 +177,7 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          selectedFilters.length > 1
+                          selectedFilters.isNotEmpty
                               ? selectedFilters.clear()
                               : selectedFilters.addAll(allMuscles);
                         });
@@ -201,6 +202,7 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
                           (muscle) => Padding(
                             padding: const EdgeInsets.only(right: 8),
                             child: FilterChip(
+                              showCheckmark: false,
                               label: Text(muscle),
                               selected: selectedFilters.contains(muscle),
                               onSelected: (selected) {
@@ -210,23 +212,22 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
                                       : selectedFilters.remove(muscle);
                                 });
                               },
-                              backgroundColor: Colors.grey.shade200,
-                              selectedColor: muscleColors[muscle]?.withOpacity(
-                                0.3,
-                              ),
+                              backgroundColor: Colors.white,
+                              selectedColor: Colors.blue[600],
                               labelStyle: TextStyle(
+                                letterSpacing: 1.3,
+                                height: 1.5,
                                 color: selectedFilters.contains(muscle)
-                                    ? muscleColors[muscle]
-                                    : Colors.grey.shade700,
-                                fontWeight: selectedFilters.contains(muscle)
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontWeight: FontWeight.w500,
                               ),
+                              shape: StadiumBorder(),
                               side: BorderSide(
                                 color: selectedFilters.contains(muscle)
-                                    ? muscleColors[muscle] ?? Colors.blue
-                                    : Colors.transparent,
-                                width: 1.5,
+                                    ? Colors.blue[600]!
+                                    : Colors.grey.shade300,
+                                width: 1,
                               ),
                             ),
                           ),
@@ -274,11 +275,65 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
                       ),
                     ),
                   )
-                : ExerciseWidget(data: filteredExercises),
+                : muscleList(filteredExercises),
           ),
           const SizedBox(height: 24),
         ],
       ),
+    );
+  }
+
+  Map<String, List<ListItemData>> groupExercisesByMuscle(
+    List<ListItemData> filteredExercises,
+  ) {
+    Map<String, List<ListItemData>> grouped = {};
+    for (var exercise in filteredExercises) {
+      if (!grouped.containsKey(exercise.muscleGroup)) {
+        grouped[exercise.muscleGroup] = [];
+      }
+      grouped[exercise.muscleGroup]!.add(exercise);
+    }
+    return grouped;
+  }
+
+  Widget muscleList(List<ListItemData> filteredExercises) {
+    final excerciseListByMuscle = groupExercisesByMuscle(filteredExercises);
+    return Column(
+      children: excerciseListByMuscle.entries.map((entry) {
+        final muscle = entry.key;
+        final exercises = entry.value;
+
+        return Padding(
+          padding: EdgeInsets.only(bottom: 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GradientTitle(
+                      containerColorName: muscleColors[muscle],
+                      muscleName: muscle,
+                    ),
+                    Text(
+                      "${exercises.length} exercises",
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              ExerciseWidget(data: exercises),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }
