@@ -241,7 +241,7 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
                                 });
                               },
                               backgroundColor: Colors.white,
-                              selectedColor: Colors.blue[600],
+                              selectedColor: Colors.blue[800],
                               labelStyle: TextStyle(
                                 letterSpacing: 1.3,
                                 height: 1.5,
@@ -250,7 +250,13 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
                                     : Colors.black,
                                 fontWeight: FontWeight.w500,
                               ),
-                              shape: StadiumBorder(),
+                              elevation: selectedFilters.contains(muscle)
+                                  ? 2
+                                  : 0,
+                              shadowColor: Colors.blue[900],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                               side: BorderSide(
                                 color: selectedFilters.contains(muscle)
                                     ? Colors.blue[600]!
