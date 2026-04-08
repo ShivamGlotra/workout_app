@@ -110,20 +110,45 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Exercise Library",
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "PUSH YOUR  ",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.5,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "LIMITS.",
+                        style: TextStyle(
+                          color: Colors.blue.shade600,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.5,
+                          fontFamily: 'italic',
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+
                 const SizedBox(height: 8),
                 Text(
-                  "${filteredExercises.length} exercises available",
-                  style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+                  "Browse our curated library of professional movements designed for maximum hypertrophy and functional strength.",
+                  style: TextStyle(
+                    color: Colors.grey.shade800,
+                    fontSize: 18,
+                    letterSpacing: 1.2,
+                  ),
                 ),
               ],
             ),
           ),
+          const SizedBox(height: 20),
 
           // Search Bar
           Padding(
@@ -137,7 +162,10 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
               decoration: InputDecoration(
                 isDense: true,
                 hintText: "Search exercises...",
+                hintStyle: TextStyle(color: Colors.grey.shade600),
                 prefixIcon: Icon(Icons.search, color: Colors.grey.shade600),
+                filled: true,
+                fillColor: Colors.grey.shade200,
                 suffixIcon: searchQuery.isNotEmpty
                     ? IconButton(
                         icon: const Icon(Icons.clear),
@@ -150,14 +178,14 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
                       )
                     : null,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide.none,
                 ),
                 contentPadding: const EdgeInsets.symmetric(vertical: 10),
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 30),
 
           // Quick Filter Chips
           Padding(
@@ -317,12 +345,22 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
                       containerColorName: muscleColors[muscle],
                       muscleName: muscle,
                     ),
-                    Text(
-                      "${exercises.length} exercises",
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        "${exercises.length} exercises",
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13,
+                        ),
                       ),
                     ),
                   ],
