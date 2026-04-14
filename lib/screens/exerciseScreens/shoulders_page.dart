@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/constants/exercises.dart';
-import 'package:workout_app/widgets/exercise_filter.dart';
+import 'package:workout_app/widgets/exercise_flitered_list.dart';
 import 'package:workout_app/widgets/exercise_widget.dart';
 
 class ShouldersPage extends StatefulWidget {
@@ -13,11 +13,6 @@ class ShouldersPage extends StatefulWidget {
 class _ShouldersPageState extends State<ShouldersPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ExerciseFilter(),
-        ExerciseWidget(data: chestExercises),
-      ],
-    );
+    return Column(children: [ExerciseWidget(data: chestExercises)]);
   }
 }
