@@ -24,9 +24,9 @@ class _QuickWorkoutPageState extends State<QuickWorkoutPage> {
   final Set<String> selectedFilters = {"Beginner", "Intermediate", "Advanced"};
 
   final List<String> headerData = [
-    "30-MIN",
-    "WORKOUT",
-    "Fast, focused sessions built to help you train hard and make the most of every minute.",
+    "High Energy",
+    "Low Time",
+    "Precision-engineered 30-minute sessions for the dedicated fitness enthusiast. ",
   ];
 
   @override

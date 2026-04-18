@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/widgets/video_player.dart';
 
 class ExerciseDetailsScreen extends StatefulWidget {
   final String exerciseName;
@@ -55,17 +56,9 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
                         onTap: () => {
                           showDialog(
                             context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text("Video Tutorial"),
-                              content: Text(
-                                "This is where the video tutorial will be displayed.",
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: Text("Close"),
-                                ),
-                              ],
+                            builder: (_) => CustomVideoPlayer(
+                              videoUrl:
+                                  "https://www.youtube.com/watch?v=2yjwXTZQDDI",
                             ),
                           ),
                         },
