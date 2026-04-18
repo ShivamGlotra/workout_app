@@ -1,6 +1,6 @@
 // lib/data/exercises/chest_exercises.dart
 import 'package:flutter/material.dart';
-import '../widgets/exercise_widget.dart';
+import 'package:workout_app/widgets/exercise_widget.dart';
 
 const List<ListItemData> chestExercises = [
   ListItemData(
