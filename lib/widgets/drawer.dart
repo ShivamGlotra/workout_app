@@ -7,7 +7,7 @@ class CustomDrawer extends StatelessWidget {
 
   final List<Map<String, dynamic>> drawerButtons = [
     {"title": "Home", "icon": Icons.home_outlined},
-    {"title": "Exercise Plans", "icon": Icons.assignment_outlined},
+    {"title": "Two-Week Training Plans", "icon": Icons.assignment_outlined},
     {"title": "Muscle Group Plans", "icon": Icons.sports_gymnastics_outlined},
     {"title": "BMI Calculator", "icon": Icons.calculate_outlined},
     {"title": "Calorie Calculator", "icon": Icons.restaurant_outlined},
