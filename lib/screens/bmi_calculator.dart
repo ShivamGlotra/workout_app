@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_app/widgets/exercise_list_header.dart';
 import 'package:workout_app/widgets/number_stepper.dart';
 
 class BmiCalculatorScreen extends StatefulWidget {
@@ -20,93 +21,60 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
   double bmiResult = 0;
   bool userClickedCalculate = false;
 
+  final List<String> bmiHeading = [
+    "Know",
+    "Your BMI",
+    "Calculate your Body Mass Index in seconds to better understand your weight range and track progress toward a healthier lifestyle.",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("BMI Calculator"), centerTitle: true),
       body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 360),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 360),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 60,
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade300,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.scale,
-                                    size: 40,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              Text(
-                                "BMI calculator",
-                                style: Theme.of(context).textTheme.headlineSmall
-                                    ?.copyWith(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                "Calculate your Body Mass Index to assess your body weight category",
-                                style: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontSize: 14,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.widthOf(context) * .9,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ExerciseHeaderSection(heading: bmiHeading),
+                      SizedBox(height: 10),
+                      widgetContainer(
+                        customWidget: calculator(),
+                        showSegmentControl: true,
+                      ),
+                      SizedBox(
+                        height: userClickedCalculate
+                            ? 20
+                            : MediaQuery.of(context).padding.bottom + 30,
+                      ),
+                      if (userClickedCalculate) ...[
                         widgetContainer(
-                          customWidget: calculator(),
-                          showSegmentControl: true,
+                          customWidget: bmiResultWidget(
+                            _groupValue,
+                            userHeight,
+                            userWeight,
+                          ),
                         ),
+                        SizedBox(height: 20),
+                        widgetContainer(customWidget: bmiCategoryBlock()),
                         SizedBox(
-                          height: userClickedCalculate
-                              ? 20
-                              : MediaQuery.of(context).padding.bottom + 30,
+                          height: MediaQuery.of(context).padding.bottom + 30,
                         ),
-                        if (userClickedCalculate) ...[
-                          widgetContainer(
-                            customWidget: bmiResultWidget(
-                              _groupValue,
-                              userHeight,
-                              userWeight,
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          widgetContainer(customWidget: bmiCategoryBlock()),
-                          SizedBox(
-                            height: MediaQuery.of(context).padding.bottom + 30,
-                          ),
-                        ],
                       ],
-                    ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
