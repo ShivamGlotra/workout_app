@@ -119,14 +119,23 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
               widget.exerciseFilters.indexed
                   .map((entry) => exerciseTitle(entry.$2, colorList[entry.$1]))
                   .toList(),
-              exerciseWidget(
-                "Flat Bench Press",
-                "assets/images/bench_press.jpg",
-                setsAndReps[0],
-                "120 kcal",
-                Icon(Icons.ice_skating),
-                Icon(Icons.ice_skating),
-                "Details",
+              Column(
+                children: exerciseList
+                    .map(
+                      (exerciseName) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: exerciseWidget(
+                          exerciseName,
+                          "assets/images/bench_press.jpg",
+                          setsAndReps[0],
+                          "120 kcal",
+                          Icon(Icons.ice_skating),
+                          Icon(Icons.ice_skating),
+                          "Details",
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
               navigatingButtons(
                 Icon(Icons.arrow_forward_ios, size: 12),
@@ -151,14 +160,23 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                     ),
                   )
                   .toList(),
-              exerciseWidget(
-                "Flat Bench Press",
-                "assets/images/bench_press.jpg",
-                setsAndReps[1],
-                "120 kcal",
-                Icon(Icons.ice_skating),
-                Icon(Icons.ice_skating),
-                "Details",
+              Column(
+                children: exerciseList
+                    .map(
+                      (exerciseName) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: exerciseWidget(
+                          exerciseName,
+                          "assets/images/bench_press.jpg",
+                          setsAndReps[0],
+                          "120 kcal",
+                          Icon(Icons.ice_skating),
+                          Icon(Icons.ice_skating),
+                          "Details",
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
               navigatingButtons(
                 Icon(Icons.arrow_forward_ios, size: 12),
@@ -183,14 +201,23 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                     ),
                   )
                   .toList(),
-              exerciseWidget(
-                "Flat Bench Press",
-                "assets/images/bench_press.jpg",
-                setsAndReps[2],
-                "120 kcal",
-                Icon(Icons.ice_skating),
-                Icon(Icons.ice_skating),
-                "Details",
+              Column(
+                children: exerciseList
+                    .map(
+                      (exerciseName) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: exerciseWidget(
+                          exerciseName,
+                          "assets/images/bench_press.jpg",
+                          setsAndReps[0],
+                          "120 kcal",
+                          Icon(Icons.ice_skating),
+                          Icon(Icons.ice_skating),
+                          "Details",
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
               navigatingButtons(
                 Icon(Icons.arrow_forward_ios, size: 12),
