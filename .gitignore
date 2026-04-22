@@ -47,6 +47,7 @@ ios/Runner/GeneratedPluginRegistrant.*
 # macOS
 macos/Pods/
 macos/Flutter/GeneratedPluginRegistrant.swift
+macos/Flutter/ephemeral/
 
 # Windows
 windows/flutter/ephemeral/
