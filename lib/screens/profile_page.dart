@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_app/widgets/exercise_list_header.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -10,6 +11,11 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   int? _groupValue = 0;
+  final List<String> profileHeading = [
+    "Sign In",
+    "Register",
+    "Create an account or log in to save your workout plans, track progress, and access your data across devices.",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -19,50 +25,13 @@ class _ProfilePageState extends State<ProfilePage> {
           child: SingleChildScrollView(
             child: Center(
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 360),
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.widthOf(context) * .9,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.person_outline,
-                                size: 40,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            "Welcome To GymCoach",
-                            style: Theme.of(context).textTheme.headlineSmall
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            _groupValue == 0
-                                ? "Login to continue your fitness journey"
-                                : "Create an account to get started",
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    ExerciseHeaderSection(heading: profileHeading),
                     SizedBox(height: 10),
                     Container(
                       padding: EdgeInsets.only(

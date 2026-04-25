@@ -2,49 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:workout_app/widgets/exercise_list_header.dart';
 import 'package:workout_app/widgets/workout_plan_card.dart';
 
-class MuscleGroupPlans extends StatefulWidget {
-  const MuscleGroupPlans({super.key});
+class BiWeeklyExercisePlans extends StatefulWidget {
+  const BiWeeklyExercisePlans({super.key});
 
   @override
-  State<MuscleGroupPlans> createState() => _MuscleGroupPlansState();
+  State<BiWeeklyExercisePlans> createState() => _BiWeeklyExercisePlansState();
 }
 
-class _MuscleGroupPlansState extends State<MuscleGroupPlans> {
+class _BiWeeklyExercisePlansState extends State<BiWeeklyExercisePlans> {
   final List<String> heading = [
-    "Train",
-    "Every Muscle",
-    "Explore ready-made workout plans for chest, back, legs, shoulders, arms, and core. Follow targeted routines designed to help you build strength, stay consistent, and reach your fitness goals.",
+    "Build",
+    "In 14 Days",
+    "Follow structured two-week training plans designed to boost strength, improve endurance, and keep you consistent. Stay focused with guided workouts built for real progress.",
   ];
 
   final List<List<String>> workoutPlanDataList = [
     [
-      "Chest Body Blast",
-      "A high-intensity workout targeting the chest, back, shoulders, and arms to build strength and muscle mass.",
+      "14-Day Strength Kickstart",
+      "A two-week program focused on building total-body strength through progressive compound lifts and structured recovery days.",
       "",
     ],
     [
-      "Leg Powerhouse",
-      "A comprehensive leg workout designed to build strength and endurance in the quadriceps, hamstrings, glutes, and calves.",
+      "Lean Muscle Builder",
+      "A balanced 14-day training plan combining hypertrophy workouts and conditioning sessions to help build lean muscle mass.",
       "",
     ],
     [
-      "Core Strength Builder",
-      "A focused workout plan to strengthen the core muscles, including the abdominals, obliques, and lower back, for improved stability and posture.",
+      "Fat Burn Accelerator",
+      "A high-energy two-week routine blending strength circuits, cardio, and core work to maximize calorie burn and endurance.",
       "",
     ],
     [
-      "Shoulder Sculptor",
-      "A targeted workout routine to build and tone the shoulder muscles, including the deltoids and rotator cuff, for enhanced upper body strength and aesthetics.",
+      "Upper Body Power Cycle",
+      "A focused two-week split targeting chest, back, shoulders, and arms to improve upper body strength and definition.",
       "",
     ],
     [
-      "Arm Toning Circuit",
-      "A dynamic workout plan designed to tone and strengthen the biceps, triceps, and forearms, using a combination of resistance exercises and bodyweight movements for sculpted arms.",
+      "Lower Body Growth Plan",
+      "A progressive 14-day leg-focused program designed to develop quads, hamstrings, glutes, and calves.",
       "",
     ],
     [
-      "Back Strength Builder",
-      "A comprehensive workout plan focused on strengthening the back muscles, including the latissimus dorsi, rhomboids, and trapezius, to improve posture, enhance upper body strength, and support overall fitness goals.",
+      "Athletic Performance Boost",
+      "A dynamic two-week plan combining strength, mobility, speed, and conditioning to improve overall athletic performance.",
       "",
     ],
   ];
@@ -52,7 +52,7 @@ class _MuscleGroupPlansState extends State<MuscleGroupPlans> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Muscle Plans"), centerTitle: true),
+      appBar: AppBar(title: Text("Two-Week Training Plans"), centerTitle: true),
       body: SafeArea(
         child: Column(
           children: [

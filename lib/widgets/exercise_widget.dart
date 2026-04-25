@@ -49,7 +49,7 @@ class ExerciseWidget extends StatelessWidget {
           // },
           child: Container(
             width: double.infinity,
-            margin: const EdgeInsets.all(5),
+            margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: Colors.white,

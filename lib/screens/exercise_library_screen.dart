@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/constants/exercises.dart';
+import 'package:workout_app/widgets/exercise_list_header.dart';
 import 'package:workout_app/widgets/exercise_widget.dart';
+import 'package:workout_app/widgets/filter_chips.dart';
+import 'package:workout_app/widgets/gradient_title.dart';
+import 'package:workout_app/widgets/search_bar.dart';
 
 class ExerciseLibraryScreen extends StatefulWidget {
   const ExerciseLibraryScreen({super.key});
@@ -12,7 +16,11 @@ class ExerciseLibraryScreen extends StatefulWidget {
 class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
   bool showFilters = false;
   String searchQuery = "";
-
+  final List<String> headingData = [
+    "PUSH YOUR",
+    "LIMITS.",
+    "Browse our curated library of professional movements designed for maximum hypertrophy and functional strength.",
+  ];
   final TextEditingController searchFieldController = TextEditingController();
   // final screenWidth = MediaQuery.of(context).size.width;
 
@@ -32,15 +40,15 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
     "Cardio",
   };
 
-  final List<String> allMuscles = [
-    "Chest",
-    "Legs",
-    "Back",
-    "Shoulders",
-    "Arms",
-    "Core",
-    "Cardio",
-  ];
+  final Map<String, Color> allMuscles = {
+    "Chest": ?Colors.blue[800],
+    "Legs": ?Colors.blue[800],
+    "Back": ?Colors.blue[800],
+    "Shoulders": ?Colors.blue[800],
+    "Arms": ?Colors.blue[800],
+    "Core": ?Colors.blue[800],
+    "Cardio": ?Colors.blue[800],
+  };
 
   final Map<String, List<ListItemData>> exercisesByMuscle = {
     "Chest": chestExercises,
@@ -60,16 +68,6 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
     "Arms": Icons.sports_gymnastics,
     "Core": Icons.account_balance,
     "Cardio": Icons.favorite,
-  };
-
-  final Map<String, Color> muscleColors = {
-    "Chest": Colors.red,
-    "Legs": Colors.blue,
-    "Back": Colors.purple,
-    "Shoulders": Colors.orange,
-    "Arms": Colors.green,
-    "Core": Colors.yellow,
-    "Cardio": Colors.pink,
   };
 
   List<ListItemData> getFilteredExercises() {
@@ -104,138 +102,31 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
       child: Column(
         children: [
           // Header Section
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Exercise Library",
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  "${filteredExercises.length} exercises available",
-                  style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
-                ),
-              ],
-            ),
-          ),
+          ExerciseHeaderSection(heading: headingData),
+          const SizedBox(height: 20),
 
-          // Search Bar
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextField(
-              controller: searchFieldController,
-              style: const TextStyle(fontSize: 15),
-              onChanged: (value) {
-                setState(() => searchQuery = value);
-              },
-              decoration: InputDecoration(
-                isDense: true,
-                hintText: "Search exercises...",
-                prefixIcon: Icon(Icons.search, color: Colors.grey.shade600),
-                suffixIcon: searchQuery.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          setState(() {
-                            searchQuery = "";
-                            searchFieldController.clear();
-                          });
-                        },
-                      )
-                    : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
-                ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 10),
-              ),
-            ),
+          // // Search Bar
+          CustomSearchBar(
+            searchFieldController: searchFieldController,
+            onChanged: () {
+              setState(() => searchQuery = searchFieldController.text);
+            },
+            onClear: () {
+              setState(() => searchQuery = "");
+            },
+            hintText: "Search exercises...",
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 30),
 
           // Quick Filter Chips
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Filter by Muscle",
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedFilters.length > 1
-                              ? selectedFilters.clear()
-                              : selectedFilters.addAll(allMuscles);
-                        });
-                      },
-                      child: Text(
-                        selectedFilters.isNotEmpty ? "Clear All" : "Select All",
-                        style: TextStyle(
-                          color: Colors.blue.shade600,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: allMuscles
-                        .map(
-                          (muscle) => Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: FilterChip(
-                              label: Text(muscle),
-                              selected: selectedFilters.contains(muscle),
-                              onSelected: (selected) {
-                                setState(() {
-                                  selected
-                                      ? selectedFilters.add(muscle)
-                                      : selectedFilters.remove(muscle);
-                                });
-                              },
-                              backgroundColor: Colors.grey.shade200,
-                              selectedColor: muscleColors[muscle]?.withOpacity(
-                                0.3,
-                              ),
-                              labelStyle: TextStyle(
-                                color: selectedFilters.contains(muscle)
-                                    ? muscleColors[muscle]
-                                    : Colors.grey.shade700,
-                                fontWeight: selectedFilters.contains(muscle)
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
-                              ),
-                              side: BorderSide(
-                                color: selectedFilters.contains(muscle)
-                                    ? muscleColors[muscle] ?? Colors.blue
-                                    : Colors.transparent,
-                                width: 1.5,
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
-              ],
-            ),
+          CustomFilterChips(
+            allFilters: allMuscles,
+            selectedFilters: selectedFilters,
+            onChanged: (updateFilters) {
+              setState(() {
+                selectedFilters.addAll(updateFilters);
+              });
+            },
           ),
           const SizedBox(height: 24),
 
@@ -274,11 +165,75 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
                       ),
                     ),
                   )
-                : ExerciseWidget(data: filteredExercises),
+                : muscleList(filteredExercises),
           ),
           const SizedBox(height: 24),
         ],
       ),
+    );
+  }
+
+  Map<String, List<ListItemData>> groupExercisesByMuscle(
+    List<ListItemData> filteredExercises,
+  ) {
+    Map<String, List<ListItemData>> grouped = {};
+    for (var exercise in filteredExercises) {
+      if (!grouped.containsKey(exercise.muscleGroup)) {
+        grouped[exercise.muscleGroup] = [];
+      }
+      grouped[exercise.muscleGroup]!.add(exercise);
+    }
+    return grouped;
+  }
+
+  Widget muscleList(List<ListItemData> filteredExercises) {
+    final excerciseListByMuscle = groupExercisesByMuscle(filteredExercises);
+    return Column(
+      children: excerciseListByMuscle.entries.map((entry) {
+        final muscle = entry.key;
+        final exercises = entry.value;
+
+        return Padding(
+          padding: EdgeInsets.only(bottom: 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GradientTitle(
+                      containerColorName: allMuscles[muscle],
+                      muscleName: muscle,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        "${exercises.length} exercises",
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              ExerciseWidget(data: exercises),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }

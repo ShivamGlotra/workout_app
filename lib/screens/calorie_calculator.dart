@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/widgets/exercise_list_header.dart';
 import 'package:workout_app/widgets/number_stepper.dart';
 
 class CalorieCalculatorScreen extends StatefulWidget {
@@ -20,6 +21,12 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
   int targetCalories = 0;
   bool userClickedCalculate = false;
 
+  final List<String> calorieHeading = [
+    "Fuel",
+    "Your Goals",
+    "Estimate your daily calorie needs based on your body and activity level. Plan your nutrition smarter for fat loss, maintenance, or muscle gain.",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,49 +37,13 @@ class _BmiCalculatorScreenState extends State<CalorieCalculatorScreen> {
             child: SingleChildScrollView(
               child: Center(
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 360),
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.widthOf(context) * .9,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 60,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade300,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.calculate_outlined,
-                                  size: 40,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              "Calorie calculator",
-                              style: Theme.of(context).textTheme.headlineSmall
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              "Calculate your daily caloric needs based on your goals and activity level",
-                              style: TextStyle(
-                                color: Colors.grey.shade600,
-                                fontSize: 14,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
+                      ExerciseHeaderSection(heading: calorieHeading),
                       SizedBox(height: 10),
                       widgetContainer(customWidget: calculator()),
                       SizedBox(

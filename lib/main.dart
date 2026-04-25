@@ -3,10 +3,11 @@ import 'package:workout_app/screens/about.dart';
 import 'package:workout_app/screens/ai_bot_screen.dart';
 import 'package:workout_app/screens/bmi_calculator.dart';
 import 'package:workout_app/screens/calorie_calculator.dart';
-import 'package:workout_app/screens/custom_workout.dart';
+import 'package:workout_app/screens/muscle_group_plans.dart';
+import 'package:workout_app/screens/my_workout_plans.dart';
 import 'package:workout_app/screens/exercise_library_screen.dart';
 import 'package:workout_app/screens/profile_page.dart';
-import 'package:workout_app/screens/weekly_exercise_plans.dart';
+import 'package:workout_app/screens/biweekly_exercise_plans.dart';
 import 'package:workout_app/widgets/drawer.dart';
 import 'package:workout_app/screens/home_page.dart';
 import 'constants/page_heading.dart';
@@ -35,8 +36,8 @@ class MyApp extends StatelessWidget {
       // initialRoute: '/',
       home: const MainNavigation(),
       routes: {
-        '/exercisePlans': (context) => WeeklyExercisePlans(),
-        '/muscleGroupPlans': (context) => WeeklyExercisePlans(),
+        '/exercisePlans': (context) => BiWeeklyExercisePlans(),
+        '/muscleGroupPlans': (context) => MuscleGroupPlans(),
         '/bmi': (context) => BmiCalculatorScreen(),
         '/calorie': (context) => CalorieCalculatorScreen(),
         '/aiCoach': (context) => AiBotScreen(),
@@ -68,7 +69,7 @@ class _MainNavigationState extends State<MainNavigation> {
       case 'Home':
         setState(() => _selectedIndex = 0);
         break;
-      case 'Exercise Plans':
+      case 'Two-Week Training Plans':
         Navigator.pushNamed(context, '/exercisePlans');
         break;
       case 'Muscle Group Plans':
@@ -96,7 +97,7 @@ class _MainNavigationState extends State<MainNavigation> {
     final List<Widget> screens = [
       HomePage(reset: resetHome), // "Home"
       ExerciseLibraryScreen(), // "Exercises"
-      CustomWorkoutScreen(),
+      MyWorkoutPlans(),
       ProfilePage(),
     ];
     return Scaffold(

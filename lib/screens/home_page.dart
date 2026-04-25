@@ -41,7 +41,6 @@ class _HomePageState extends State<HomePage> {
         // Padding(padding: const EdgeInsets.symmetric(horizontal: 16)),
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child:
                 _activePageKey != null &&
                     pageBuilders.containsKey(_activePageKey)
