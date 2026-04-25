@@ -88,8 +88,8 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
       padding: EdgeInsets.only(
         top: showSegmentControl ? 20 : 0,
         bottom: 20,
-        left: 40,
-        right: 40,
+        left: 30,
+        right: 30,
       ),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -109,24 +109,19 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
                   thumbColor: Colors.white, // The "active" button color
                   groupValue: _groupValue,
                   children: {
-                    0: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        "Metric (Kg,cm)",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    0: Text(
+                      "Metric (Kg,cm)",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    1: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        "Imperial (lbs,in)",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+
+                    1: Text(
+                      "Imperial (lbs,in)",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   },
