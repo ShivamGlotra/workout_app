@@ -5,6 +5,13 @@
         "type": "dart",
         "request": "launch",
         "program": "lib/main.dart"
+    },
+    {
+        "name": "Flutter ios",
+        "type": "dart",
+        "request": "launch",
+        "program": "lib/main.dart",
+        "deviceId": "673A295C-B6B0-4011-A77B-A4B0DED24374"
     }
     ]
 }
