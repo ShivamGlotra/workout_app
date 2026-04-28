@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_app/screens/start_workout_flow/session_summary_screen.dart';
+import 'package:workout_app/widgets/video_player.dart';
 
 class CurrentExerciseScreen extends StatefulWidget {
   final List<String> exerciseList;
@@ -26,6 +27,8 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
   int totalTime = 0;
   int currentSetIndex = 0;
   int totalSets = 0;
+  bool _isSkipButtonDisabled = false;
+  final Set<String> completedExercises = {};
 
   @override
   void initState() {
@@ -105,8 +108,11 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
         title: Text(_formatTimer(_seconds)),
         actions: [
           iconContainer(
-            _isRunning ? Icons.pause : Icons.play_arrow,
-            _isRunning ? Colors.grey : Colors.black54,
+            // _isRunning ? Icons.pause : Icons.play_arrow,
+            // _isRunning ? Colors.grey : Colors.black54,
+            // _isRunning ? _pauseTimer : _startTimer,
+            _isRunning ? CupertinoIcons.pause : CupertinoIcons.play,
+            _isRunning ? Colors.orange : Colors.green,
             _isRunning ? _pauseTimer : _startTimer,
           ),
           SizedBox(width: 10),
@@ -124,10 +130,11 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
             child: Column(
               spacing: 10,
               children: [
-                progressBar(widget.exerciseList.length, 7),
-                widget.exerciseList.length > 1
+                progressBar(widget.exerciseList.length, exerciseListIndex + 1),
+                widget.exerciseList.length > 1 &&
+                        exerciseListIndex < widget.exerciseList.length - 1
                     ? Text(
-                        "Up Next: ${widget.exerciseList[1]}",
+                        "Up Next: ${widget.exerciseList[exerciseListIndex < widget.exerciseList.length - 1 ? exerciseListIndex + 1 : 0]}",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -136,10 +143,12 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
                       )
                     : SizedBox.shrink(),
                 currentExerciseContainer(
-                  widget.exerciseList[2],
-                  "Chest",
+                  widget.exerciseList[exerciseListIndex],
+                  exerciseListIndex < widget.exerciseList.length - 1
+                      ? widget.exerciseList[exerciseListIndex + 1]
+                      : "",
                   "assets/images/incline_press.jpg",
-                  1,
+                  currentSetIndex + 1,
                   getTotalSetsForLevel(widget.userLevel),
                   getTotalReps(widget.userLevel),
                 ),
@@ -232,7 +241,7 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "Target Muscle: $muscleName",
+                  muscleName.isNotEmpty ? "Target Muscle: $muscleName" : "",
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
@@ -273,22 +282,16 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
               onTap: () => {
                 showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text("Video Tutorial"),
-                    content: Text(
-                      "This is where the video tutorial will be displayed.",
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text("Close"),
-                      ),
-                    ],
+                  builder: (_) => CustomVideoPlayer(
+                    videoUrl: "https://www.youtube.com/watch?v=2yjwXTZQDDI",
                   ),
                 ),
               },
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 80),
+                padding: EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: MediaQuery.widthOf(context) * .20,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -301,7 +304,7 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
                       "Watch Video Tutorial",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: MediaQuery.widthOf(context) * .035,
                       ),
                     ),
                   ],
@@ -328,142 +331,221 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
   }
 
   Widget buttonsForTheScreen() {
-    return Column(
-      children: [
-        SizedBox(
-          height: 55,
-          width: MediaQuery.widthOf(context) * .87,
-          child: ElevatedButton.icon(
-            style: ButtonStyle(
-              elevation: WidgetStateProperty.all(2),
-              shadowColor: WidgetStateProperty.all(Colors.black87),
-              backgroundColor: WidgetStateProperty.all(Colors.black54),
-              foregroundColor: WidgetStateProperty.all(Colors.white),
-              shape: WidgetStateProperty.all(
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              ),
-            ),
-            onPressed: () => {
-              setState(() => _stopTimer()),
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SessionSummaryScreen(
-                    completedExercises: widget.exerciseList,
-                    workoutTime: totalTime,
-                  ),
-                ),
-              ),
-            },
-            icon: Icon(Icons.arrow_forward),
-            iconAlignment: IconAlignment.end,
-            label: Text(
-              currentSetIndex < 4
-                  ? "Next Set".toUpperCase()
-                  : "Next Exercise".toUpperCase(),
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextButton.icon(
+    return SizedBox(
+      width: MediaQuery.widthOf(context) * .9,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 55,
+            width: MediaQuery.widthOf(context),
+            child: ElevatedButton.icon(
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Colors.grey[200]),
-                foregroundColor: WidgetStateProperty.all(Colors.black38),
-                padding: WidgetStateProperty.all(
-                  EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                ),
+                elevation: WidgetStateProperty.all(1),
+                shadowColor: WidgetStateProperty.all(Colors.black87),
+                backgroundColor: isLastSetOfLastExercise()
+                    ? WidgetStateProperty.all(Colors.black)
+                    : WidgetStateProperty.all(Colors.black54),
+                foregroundColor: WidgetStateProperty.all(Colors.white),
                 shape: WidgetStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
-              onPressed: () => (),
-              label: Text("Skip Exercise"),
-              icon: Icon(CupertinoIcons.play),
-            ),
-            TextButton.icon(
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Colors.grey[200]),
-                foregroundColor: WidgetStateProperty.all(Colors.black38),
-                padding: WidgetStateProperty.all(
-                  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                ),
-                shape: WidgetStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-              onPressed: () => setState(() {
-                markCompleted = !markCompleted;
-              }),
-              label: Text("Mark Completed"),
-              icon: Icon(
-                markCompleted
-                    ? CupertinoIcons.check_mark_circled_solid
-                    : CupertinoIcons.check_mark_circled,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 10),
-        SizedBox(
-          height: 60,
-          width: MediaQuery.widthOf(context) * .88,
-          child: Card(
-            elevation: 1,
-            color: Colors.red[50],
-            child: TextButton(
-              child: Text(
-                "End Workout",
+              onPressed: () => {
+                setState(() {
+                  currentSetIndex < getTotalSetsForLevel(widget.userLevel) - 1
+                      ? currentSetIndex++
+                      : exerciseListIndex < widget.exerciseList.length - 1
+                      ? incrementExerciseAndSet()
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SessionSummaryScreen(
+                              completedExercises: completedExercises.toList(),
+                              workoutTime: totalTime,
+                            ),
+                          ),
+                        );
+                }),
+              },
+              icon: Icon(Icons.arrow_forward),
+              iconAlignment: IconAlignment.end,
+              label: Text(
+                getButtonName(),
                 style: TextStyle(
-                  color: Colors.red[400],
+                  color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              onPressed: () => {
-                setState(() => _stopTimer()),
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SessionSummaryScreen(
-                      completedExercises: widget.exerciseList,
-                      workoutTime: totalTime,
+            ),
+          ),
+          SizedBox(height: 10),
+          SizedBox(
+            width: MediaQuery.widthOf(context),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: 55,
+                  width: MediaQuery.widthOf(context) * .44,
+                  child: TextButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(
+                        Colors.grey[200],
+                      ),
+                      foregroundColor: WidgetStateProperty.resolveWith<Color>((
+                        states,
+                      ) {
+                        if (_isSkipButtonDisabled) {
+                          return Colors.grey; // disabled color
+                        }
+                        return Colors.blue; // enabled color
+                      }),
+                      overlayColor: _isSkipButtonDisabled
+                          ? WidgetStateProperty.all(Colors.transparent)
+                          : null,
+                      shape: WidgetStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    onPressed: () => _isSkipButtonDisabled
+                        ? null
+                        : () {
+                            if (exerciseListIndex <
+                                widget.exerciseList.length - 1) {
+                              exerciseListIndex++;
+                              currentSetIndex = 0;
+                            } else {
+                              currentSetIndex =
+                                  getTotalSetsForLevel(widget.userLevel) - 1;
+                              setState(() {
+                                _stopTimer();
+                                _isSkipButtonDisabled = true;
+                              });
+                            }
+                          }(),
+                    label: Text("Skip Exercise"),
+                    icon: Icon(CupertinoIcons.play),
+                  ),
+                ),
+                SizedBox(
+                  height: 55,
+                  width: MediaQuery.widthOf(context) * .44,
+                  child: TextButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(
+                        Colors.grey[200],
+                      ),
+                      foregroundColor: WidgetStateProperty.resolveWith<Color>((
+                        states,
+                      ) {
+                        if (_isSkipButtonDisabled) {
+                          return Colors.grey; // disabled color
+                        }
+                        return Colors.blue; // enabled color
+                      }),
+                      overlayColor: _isSkipButtonDisabled
+                          ? WidgetStateProperty.all(Colors.transparent)
+                          : null,
+                      shape: WidgetStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    onPressed: () => _isSkipButtonDisabled
+                        ? null
+                        : () {
+                            setState(() {
+                              markCompleted = !markCompleted;
+                              completedExercises.add(
+                                widget.exerciseList[exerciseListIndex],
+                              );
+                              // Turn the tick mark back to outline after .3 secs
+                              Future.delayed(Duration(milliseconds: 300), () {
+                                setState(() {
+                                  markCompleted = !markCompleted;
+                                });
+                              });
+                            });
+                            if (exerciseListIndex <
+                                widget.exerciseList.length - 1) {
+                              exerciseListIndex++;
+                              currentSetIndex = 0;
+                            } else {
+                              currentSetIndex =
+                                  getTotalSetsForLevel(widget.userLevel) - 1;
+                              setState(() {
+                                _stopTimer();
+                                _isSkipButtonDisabled = true;
+                              });
+                            }
+                          }(),
+                    label: Text("Mark Completed"),
+                    icon: Icon(
+                      markCompleted
+                          ? CupertinoIcons.check_mark_circled_solid
+                          : CupertinoIcons.check_mark_circled,
                     ),
                   ),
                 ),
-              },
+              ],
             ),
           ),
-        ),
-        TextButton.icon(
-          style: ButtonStyle(
-            shadowColor: WidgetStateProperty.all(Colors.transparent),
-            foregroundColor: WidgetStateProperty.all(Colors.black54),
-            padding: WidgetStateProperty.all(
-              EdgeInsets.only(top: 10, right: 10),
-            ),
-            shape: WidgetStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          SizedBox(height: 10),
+          SizedBox(
+            height: 60,
+            width: MediaQuery.widthOf(context),
+            child: Card(
+              elevation: 1,
+              color: Colors.red[50],
+              child: TextButton(
+                child: Text(
+                  "End Workout",
+                  style: TextStyle(
+                    color: Colors.red[400],
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: () => {
+                  setState(() => _stopTimer()),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SessionSummaryScreen(
+                        completedExercises: completedExercises.toList(),
+                        workoutTime: totalTime,
+                      ),
+                    ),
+                  ),
+                },
+              ),
             ),
           ),
-          onPressed: () => setState(() {
-            Navigator.of(context).popUntil((route) => route.isFirst);
-          }),
-          label: Text("Return to Home"),
-          icon: Icon(CupertinoIcons.home),
-        ),
-      ],
+          TextButton.icon(
+            style: ButtonStyle(
+              shadowColor: WidgetStateProperty.all(Colors.transparent),
+              foregroundColor: WidgetStateProperty.all(Colors.black54),
+              padding: WidgetStateProperty.all(
+                EdgeInsets.only(top: 10, right: 10),
+              ),
+              shape: WidgetStateProperty.all(
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+            onPressed: () => setState(() {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            }),
+            label: Text("Return to Home"),
+            icon: Icon(CupertinoIcons.home),
+          ),
+        ],
+      ),
     );
   }
 
@@ -517,5 +599,30 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
         ],
       ),
     );
+  }
+
+  String getButtonName() {
+    if (isLastSetOfLastExercise()) {
+      setState(() {
+        _isSkipButtonDisabled = true;
+        _stopTimer();
+      });
+      return "Finish Workout".toUpperCase();
+    } else {
+      return currentSetIndex < getTotalSetsForLevel(widget.userLevel)
+          ? "Next Set".toUpperCase()
+          : "Next Exercise".toUpperCase();
+    }
+  }
+
+  void incrementExerciseAndSet() {
+    exerciseListIndex++;
+    currentSetIndex = 0;
+    completedExercises.add(widget.exerciseList[exerciseListIndex]);
+  }
+
+  bool isLastSetOfLastExercise() {
+    return exerciseListIndex == widget.exerciseList.length - 1 &&
+        currentSetIndex == getTotalSetsForLevel(widget.userLevel) - 1;
   }
 }
