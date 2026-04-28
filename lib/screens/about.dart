@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:url_launcher/url_launcher.dart";
 
 class About extends StatefulWidget {
   const About({super.key});
@@ -11,10 +12,10 @@ class _AboutMeState extends State<About> {
   @override
   Widget build(BuildContext context) {
     late List<Map<String, dynamic>> connectWithMeButtons = [
-      {"icon": Icons.email, "label": "Email"},
-      {"icon": Icons.link, "label": "LinkedIn"},
-      {"icon": Icons.share, "label": "GitHub"},
-      {"icon": Icons.comment, "label": "Support"},
+      {"icon": Icons.email, "label": "Email", "url": ""},
+      {"icon": Icons.link, "label": "LinkedIn", "url": ""},
+      {"icon": Icons.share, "label": "GitHub", "url": ""},
+      {"icon": Icons.comment, "label": "Support", "url": ""},
     ];
     late List<Map<String, dynamic>> faqData = [
       {
@@ -215,46 +216,58 @@ class _AboutMeState extends State<About> {
   }
 
   Widget _contactButton(List<Map<String, dynamic>> connectWithMeButtons) {
-    return Wrap(
-      spacing: 8,
-      runSpacing: 5,
-      children: [
-        ...connectWithMeButtons.map(
-          (e) => SizedBox(
-            width: MediaQuery.widthOf(context) * .4,
-            child: ElevatedButton.icon(
-              onPressed: () {
-                switch (e['label']) {
-                  case "Email":
-                    // Handle email action
-                    break;
-                  case "LinkedIn":
-                    // Handle LinkedIn action
-                    break;
-                  case "GitHub":
-                    // Handle GitHub action
-                    break;
-                  case "Support":
-                    // Handle Support action
-                    break;
-                }
-              },
-              icon: Icon(e['icon'], size: 18, color: Colors.grey[800]),
-              label: Text(e['label']),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white30,
-                foregroundColor: Colors.black87,
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(color: Colors.black12, width: 1),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double gap = 8;
+        // 2 columns always; card fills half the width minus gaps
+        const int columns = 2;
+        final double cardWidth =
+            (constraints.maxWidth - gap * (columns - 1)) / columns;
+        // Keep a pleasant aspect ratio (width : height ≈ 1 : 0.3)
+        final double cardHeight = cardWidth * 0.3;
+        return Wrap(
+          spacing: gap,
+          runSpacing: gap,
+          children: [
+            ...connectWithMeButtons.map(
+              (e) => SizedBox(
+                width: cardWidth,
+                height: cardHeight,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    switch (e['label']) {
+                      case "Email":
+                        openUrl(e['url']);
+                        break;
+                      case "LinkedIn":
+                        openUrl(e['url']);
+                        break;
+                      case "GitHub":
+                        openUrl(e['url']);
+                        break;
+                      case "Support":
+                        openUrl(e['url']);
+                        break;
+                    }
+                  },
+                  icon: Icon(e['icon'], size: 18, color: Colors.grey[800]),
+                  label: Text(e['label']),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white30,
+                    foregroundColor: Colors.black87,
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(color: Colors.black12, width: 1),
+                    ),
+                    elevation: 0,
+                  ),
                 ),
-                elevation: 0,
               ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 
@@ -293,5 +306,13 @@ class _AboutMeState extends State<About> {
         ],
       ),
     );
+  }
+
+  Future<void> openUrl(String inputURL) async {
+    if (inputURL.isEmpty) return;
+    final Uri url = Uri.parse(inputURL);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    }
   }
 }
