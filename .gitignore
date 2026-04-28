@@ -43,6 +43,7 @@ ios/Runner/GeneratedPluginRegistrant.*
 *.xcuserstate
 *.xccheckout
 *.xcscmblueprint
+ios/Podfile.lock
 
 # macOS
 macos/Pods/

@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String? _activePageKey;
 
+  // data must be from backend
   final List<Map<String, dynamic>> exerciseTiles = [
     {"title": "CHEST", "image": "assets/images/chest.png"},
     {"title": "BACK", "image": "assets/images/back.png"},

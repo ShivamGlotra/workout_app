@@ -280,7 +280,12 @@ class _SessionSummaryScreenState extends State<SessionSummaryScreen> {
                           ),
                         ),
                       ),
-                      onPressed: () => {Navigator.pop(context)},
+                      onPressed: () => {
+                        showDialog(
+                          context: context,
+                          builder: (_) => workLoggedDialog(),
+                        ),
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         spacing: 10,
@@ -467,5 +472,59 @@ class _SessionSummaryScreenState extends State<SessionSummaryScreen> {
           .toUpperCase();
     }
     return '${parts.first[0]}${parts[1][0]}'.toUpperCase();
+  }
+
+  Widget workLoggedDialog() {
+    return AlertDialog(
+      icon: Align(
+        alignment: Alignment.centerLeft,
+        child: Icon(Icons.check_circle, color: Colors.black, size: 40),
+      ),
+      title: const Text('Workout Logged', textAlign: TextAlign.left),
+      content: const Text('Your workout has been logged successfully!'),
+      actions: [
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () => Navigator.pop(context),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  textStyle: const TextStyle(fontWeight: FontWeight.w600),
+                  backgroundColor: Colors.black.withAlpha(200),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text('View Details'),
+              ),
+            ),
+            SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () =>
+                    Navigator.popUntil(context, (route) => route.isFirst),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.black87,
+                  textStyle: const TextStyle(fontWeight: FontWeight.w600),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: const BorderSide(color: Colors.grey, width: 1),
+                  ),
+                ),
+                child: const Text('Back to Home'),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
