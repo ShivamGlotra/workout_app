@@ -8,6 +8,7 @@ import 'package:workout_app/screens/my_workout_plans.dart';
 import 'package:workout_app/screens/exercise_library_screen.dart';
 import 'package:workout_app/screens/profile_page.dart';
 import 'package:workout_app/screens/biweekly_exercise_plans.dart';
+import 'package:workout_app/utils/text_length_tosize.dart';
 import 'package:workout_app/widgets/drawer.dart';
 import 'package:workout_app/screens/home_page.dart';
 import 'constants/page_heading.dart';
@@ -153,7 +154,7 @@ class _MainNavigationState extends State<MainNavigation> {
             AnimatedContainer(
               duration: Duration(milliseconds: 300),
               height: 2,
-              width: isSelected ? _getTextWidth(label, context) : 0,
+              width: isSelected ? getTextWidth(label, fontSize: 12) : 0,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -183,17 +184,5 @@ class _MainNavigationState extends State<MainNavigation> {
 
   Widget getPageHeadingText(PageHeading pageHeading) {
     return Text(pageHeading.value, style: const TextStyle());
-  }
-
-  double _getTextWidth(String label, BuildContext context) {
-    final TextPainter textPainter = TextPainter(
-      text: TextSpan(
-        text: label,
-        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-      ),
-      maxLines: 1,
-      textDirection: TextDirection.ltr,
-    )..layout();
-    return textPainter.size.width;
   }
 }

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/screens/exercise_details_screen.dart';
 import 'package:workout_app/screens/start_workout_flow/current_exercise_screen.dart';
+import 'package:workout_app/widgets/gradient_title.dart';
 import 'package:workout_app/widgets/info_widget_planned_exc_screen.dart';
 
 class PlannedExerciseList extends StatefulWidget {
@@ -117,7 +118,12 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                 descriptionForEachLevel.first,
               ),
               widget.exerciseFilters.indexed
-                  .map((entry) => exerciseTitle(entry.$2, colorList[entry.$1]))
+                  .map(
+                    (entry) => GradientTitle(
+                      muscleName: entry.$2,
+                      containerColorName: colorList[entry.$1],
+                    ),
+                  )
                   .toList(),
               Column(
                 children: exerciseList
@@ -439,6 +445,24 @@ class _PlannedExerciseListState extends State<PlannedExerciseList>
                   ),
                   OutlinedButton(
                     onPressed: () {
+                      // Need to fix the padding of the 'Exercise Detail Screen'
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (context) => Dialog(
+                      //     insetPadding: EdgeInsets.symmetric(
+                      //       horizontal: 20,
+                      //       vertical: 24,
+                      //     ),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(12),
+                      //     ),
+                      //     child: SizedBox(
+                      //       width: MediaQuery.of(context).size.width * 0.9,
+                      //       height: MediaQuery.of(context).size.height * 0.7,
+                      //       child: ExerciseDetailsScreen(exerciseName: title),
+                      //     ),
+                      //   ),
+                      // );
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
