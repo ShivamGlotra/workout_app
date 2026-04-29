@@ -141,14 +141,14 @@ class _WorkoutPlanCardsState extends State<WorkoutPlanCards> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(width: 20),
-                Icon(Icons.watch_later_outlined, size: 20),
+                Icon(Icons.calendar_today, size: 16, color: Colors.grey),
                 SizedBox(width: 10),
                 Text(
                   "4 weeks",
                   style: TextStyle(color: Colors.black87, fontSize: 14),
                 ),
                 SizedBox(width: 70),
-                Icon(Icons.watch_later_outlined, size: 20),
+                Icon(Icons.repeat, size: 16, color: Colors.grey),
                 SizedBox(width: 10),
                 Text(
                   "3x per Week",
@@ -161,17 +161,17 @@ class _WorkoutPlanCardsState extends State<WorkoutPlanCards> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(width: 20),
-                Icon(Icons.watch_later_outlined, size: 20),
+                Icon(Icons.timer, size: 16, color: Colors.grey),
                 SizedBox(width: 10),
                 Text(
                   "4 weeks",
                   style: TextStyle(color: Colors.black87, fontSize: 14),
                 ),
                 SizedBox(width: 70),
-                Icon(Icons.watch_later_outlined, size: 20),
+                Icon(Icons.watch_later_outlined, size: 16, color: Colors.grey),
                 SizedBox(width: 10),
                 Text(
-                  "4 weeks",
+                  "45 Mins",
                   style: TextStyle(color: Colors.black87, fontSize: 14),
                 ),
               ],
@@ -180,6 +180,27 @@ class _WorkoutPlanCardsState extends State<WorkoutPlanCards> {
             SizedBox(
               width: MediaQuery.widthOf(context),
               child: TextButton(
+                onLongPress: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => Dialog(
+                      insetPadding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 24,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: PlannedExerciseList(
+                          exerciseFilters: exerciseFilters,
+                        ),
+                      ),
+                    ),
+                  );
+                },
                 onPressed: () => {
                   Navigator.push(
                     context,

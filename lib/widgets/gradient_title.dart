@@ -21,7 +21,7 @@ class GradientTitle extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  height: 30,
+                  height: 25,
                   width: 4,
                   decoration: BoxDecoration(
                     color: containerColorName ?? Colors.blue,
@@ -30,7 +30,7 @@ class GradientTitle extends StatelessWidget {
                 ),
                 Container(
                   width: MediaQuery.widthOf(context) * .5,
-                  height: 30,
+                  height: 25,
                   padding: const EdgeInsets.only(left: 8, bottom: 2, top: 2),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -46,7 +46,7 @@ class GradientTitle extends StatelessWidget {
                   child: Text(
                     (muscleName ?? 'Exercise List').toUpperCase(),
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 15,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.4,
                       color: Color(0xFF1a2340),
