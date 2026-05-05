@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/screens/start_workout_flow/current_exercise_screen.dart';
+import 'package:workout_app/widgets/tablikebuttons.dart';
 import 'package:workout_app/widgets/video_player.dart';
 
 class ExerciseDetailsScreen extends StatefulWidget {
@@ -10,6 +12,47 @@ class ExerciseDetailsScreen extends StatefulWidget {
 }
 
 class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
+  // future enhancement
+  // final Map<String, int> customizeExerciseOptions = {
+  //   "Sets": 3,
+  //   "Reps": 8,
+  //   "Time Per Set": 60,
+  // };
+  int selectedTabIndex = 0;
+
+  // Time must be different for different exercises and hence should be sent with the exercise data from the backend. For demo purposes, it's being calculated based on sets and reps.
+  int totalTime = 0;
+  static const int timeForEachExercise = 3;
+
+  final Map<String, int> customizeExerciseOptions = {"Sets": 3, "Reps": 8};
+
+  final int _maxSets = 10;
+  final int _maxReps = 30;
+
+  List<String> get listToBePassed => [
+    customizeExerciseOptions["Sets"]!.toString(),
+    customizeExerciseOptions["Reps"]!.toString(),
+  ];
+
+  void _applyTabPreset(int index) {
+    selectedTabIndex = index;
+
+    switch (index) {
+      case 0:
+        customizeExerciseOptions["Sets"] = 3;
+        customizeExerciseOptions["Reps"] = 8;
+        break;
+      case 1:
+        customizeExerciseOptions["Sets"] = 4;
+        customizeExerciseOptions["Reps"] = 10;
+        break;
+      case 2:
+        customizeExerciseOptions["Sets"] = 5;
+        customizeExerciseOptions["Reps"] = 12;
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,7 +189,13 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
                     width: MediaQuery.widthOf(context) * .89,
                     height: MediaQuery.heightOf(context) * .07,
                     child: ElevatedButton.icon(
-                      onPressed: () => (),
+                      onPressed: () => (showModalBottomSheet(
+                        context: context,
+                        builder: (_) => StatefulBuilder(
+                          builder: (context, setModalState) =>
+                              configExerciseBottomSheet(setModalState),
+                        ),
+                      )),
                       icon: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -308,6 +357,219 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget configExerciseBottomSheet(StateSetter setModalState) {
+    totalTime = customizeExerciseOptions["Sets"]! * timeForEachExercise;
+    return Container(
+      padding: const EdgeInsets.all(20),
+      width: MediaQuery.widthOf(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          rowDataWidget(
+            "Configure Exercise",
+            "Expected Time",
+            20,
+            12,
+            FontWeight.bold,
+            FontWeight.w500,
+            Colors.blue[800],
+          ),
+          rowDataWidget(
+            "Personalize your session",
+            "$totalTime mins",
+            14,
+            20,
+            FontWeight.w300,
+            FontWeight.bold,
+            Colors.blue[800],
+          ),
+          SizedBox(height: 20),
+          TabButtons(
+            selectedTabIndex: selectedTabIndex,
+            onTabSelected: (index) => setModalState(() {
+              _applyTabPreset(index);
+            }),
+          ),
+          SizedBox(height: 40),
+
+          ...customizeExerciseOptions.entries.toList().asMap().entries.map((
+            entry,
+          ) {
+            final index = entry.key;
+            final e = entry.value;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    e.key,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  counterRow(
+                    "",
+                    e.value,
+                    true,
+                    20,
+                    16,
+                    FontWeight.bold,
+                    FontWeight.w500,
+                    Colors.black,
+                    e.key,
+                    setModalState,
+                    index == 0 ? _maxSets : _maxReps,
+                  ),
+                ],
+              ),
+            );
+          }),
+
+          SizedBox(height: 40),
+          SizedBox(
+            width: MediaQuery.widthOf(context) * .9,
+            height: MediaQuery.heightOf(context) * .06,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                elevation: WidgetStateProperty.all(2),
+                shadowColor: WidgetStateProperty.all(Colors.black),
+                backgroundColor: WidgetStateProperty.all(
+                  const Color.fromARGB(221, 18, 18, 18),
+                ),
+                foregroundColor: WidgetStateProperty.all(Colors.white),
+                padding: WidgetStateProperty.all(
+                  EdgeInsets.symmetric(vertical: 10),
+                ),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              onPressed: () => (Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => CurrentExerciseScreen(
+                    exerciseList: [widget.exerciseName],
+                    customSetAndReps: listToBePassed,
+                    userLevel: 0,
+                  ),
+                ),
+              )),
+              child: Text(
+                "Proceed",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget rowDataWidget(
+    String? heading,
+    String subheading,
+    double? headingFontSize,
+    double subheadingFontSize,
+    FontWeight? headingFontWeight,
+    FontWeight? subheadingFontWeight,
+    Color? subheadingColor,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          heading ?? '',
+          style: TextStyle(
+            fontSize: headingFontSize,
+            fontWeight: headingFontWeight,
+          ),
+        ),
+        Text(
+          subheading.toString(),
+          style: TextStyle(
+            fontSize: subheadingFontSize,
+            fontWeight: subheadingFontWeight,
+            color: subheadingColor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget counterRow(
+    String? heading,
+    int subheading,
+    bool showCounter,
+    double? headingFontSize,
+    double subheadingFontSize,
+    FontWeight? headingFontWeight,
+    FontWeight? subheadingFontWeight,
+    Color? subheadingColor,
+    String? key,
+    StateSetter? setModalState,
+    int maxValue,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      spacing: 20,
+      children: [
+        Text(
+          heading ?? '',
+          style: TextStyle(
+            fontSize: headingFontSize,
+            fontWeight: headingFontWeight,
+          ),
+        ),
+        if (showCounter)
+          _counterActionButton(
+            icon: Icons.remove,
+            onTap: () => setModalState?.call(() {
+              if (key != null && customizeExerciseOptions[key]! > 0) {
+                customizeExerciseOptions[key] =
+                    customizeExerciseOptions[key]! - 1;
+              }
+            }),
+          ),
+        Text(
+          subheading.toString(),
+          style: TextStyle(
+            fontSize: subheadingFontSize,
+            fontWeight: subheadingFontWeight,
+            color: subheadingColor,
+          ),
+        ),
+        if (showCounter)
+          _counterActionButton(
+            icon: Icons.add,
+            onTap: () => setModalState?.call(() {
+              if (key != null && customizeExerciseOptions[key]! < maxValue) {
+                customizeExerciseOptions[key] =
+                    customizeExerciseOptions[key]! + 1;
+              }
+            }),
+          ),
+      ],
+    );
+  }
+
+  Widget _counterActionButton({
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return Material(
+      color: Colors.grey.shade300,
+      child: InkWell(
+        onTap: onTap,
+        child: SizedBox(
+          width: MediaQuery.widthOf(context) * .1,
+          height: MediaQuery.heightOf(context) * .045,
+          child: Icon(icon),
+        ),
+      ),
     );
   }
 }
