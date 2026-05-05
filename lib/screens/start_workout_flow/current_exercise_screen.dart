@@ -6,9 +6,11 @@ import 'package:workout_app/widgets/video_player.dart';
 
 class CurrentExerciseScreen extends StatefulWidget {
   final List<String> exerciseList;
+  final List<String>? customSetAndReps;
   final int userLevel;
   const CurrentExerciseScreen({
     required this.exerciseList,
+    this.customSetAndReps,
     required this.userLevel,
     super.key,
   });
@@ -26,7 +28,12 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
   bool imageClicked = false;
   int totalTime = 0;
   int currentSetIndex = 0;
-  int totalSets = 0;
+  int get totalSets => widget.customSetAndReps != null
+      ? int.parse(widget.customSetAndReps![0])
+      : 0; // Default to 0 if customSetAndReps is null
+  int get totalReps => widget.customSetAndReps != null
+      ? int.parse(widget.customSetAndReps![1])
+      : 0; // Default to 0 if customSetAndReps is null
   bool _isSkipButtonDisabled = false;
   final Set<String> completedExercises = {};
 
@@ -149,8 +156,10 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
                       : "",
                   "assets/images/incline_press.jpg",
                   currentSetIndex + 1,
-                  getTotalSetsForLevel(widget.userLevel),
-                  getTotalReps(widget.userLevel),
+                  totalSets != 0
+                      ? totalSets
+                      : getTotalSetsForLevel(widget.userLevel),
+                  totalReps != 0 ? totalReps : getTotalReps(widget.userLevel),
                 ),
                 SizedBox(height: 20),
                 buttonsForTheScreen(),
@@ -354,7 +363,10 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
               ),
               onPressed: () => {
                 setState(() {
-                  currentSetIndex < getTotalSetsForLevel(widget.userLevel) - 1
+                  currentSetIndex <
+                          (totalSets > 0
+                              ? totalSets - 1
+                              : getTotalSetsForLevel(widget.userLevel) - 1)
                       ? currentSetIndex++
                       : exerciseListIndex < widget.exerciseList.length - 1
                       ? incrementExerciseAndSet()
@@ -420,8 +432,9 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
                               exerciseListIndex++;
                               currentSetIndex = 0;
                             } else {
-                              currentSetIndex =
-                                  getTotalSetsForLevel(widget.userLevel) - 1;
+                              currentSetIndex = totalSets > 0
+                                  ? totalSets - 1
+                                  : getTotalSetsForLevel(widget.userLevel) - 1;
                               setState(() {
                                 _stopTimer();
                                 _isSkipButtonDisabled = true;
@@ -477,8 +490,9 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
                               exerciseListIndex++;
                               currentSetIndex = 0;
                             } else {
-                              currentSetIndex =
-                                  getTotalSetsForLevel(widget.userLevel) - 1;
+                              currentSetIndex = totalSets > 0
+                                  ? totalSets - 1
+                                  : getTotalSetsForLevel(widget.userLevel) - 1;
                               setState(() {
                                 _stopTimer();
                                 _isSkipButtonDisabled = true;
@@ -609,7 +623,10 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
       });
       return "Finish Workout".toUpperCase();
     } else {
-      return currentSetIndex < getTotalSetsForLevel(widget.userLevel)
+      return currentSetIndex <
+              (totalSets > 0
+                  ? totalSets - 1
+                  : getTotalSetsForLevel(widget.userLevel) - 1)
           ? "Next Set".toUpperCase()
           : "Next Exercise".toUpperCase();
     }
@@ -623,6 +640,9 @@ class _CurrentExerciseScreenState extends State<CurrentExerciseScreen> {
 
   bool isLastSetOfLastExercise() {
     return exerciseListIndex == widget.exerciseList.length - 1 &&
-        currentSetIndex == getTotalSetsForLevel(widget.userLevel) - 1;
+        currentSetIndex ==
+            (totalSets > 0
+                ? totalSets - 1
+                : getTotalSetsForLevel(widget.userLevel) - 1);
   }
 }
